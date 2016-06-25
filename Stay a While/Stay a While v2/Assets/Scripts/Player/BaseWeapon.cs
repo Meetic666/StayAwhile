@@ -8,7 +8,7 @@ public class BaseWeapon : MonoBehaviour
     public int ammoCount;
     protected int defAmmoCount = 24;
     protected int maxAmmoCount = 128;
-    float FireCD;
+    protected float FireCD;
     protected float FireRate = 0.2f;
     public bool reloading = false;
     public GameObject bulletPrefab;
@@ -28,7 +28,7 @@ public class BaseWeapon : MonoBehaviour
         WeaponName = newWeaponName;
     }
 
-    void Start()
+    protected virtual void Start()
     {
         this.enabled = false;
         bulletPrefab = Resources.Load("Prefabs/Weapons/Bullets/" + WeaponName + "Projectile") as GameObject;
@@ -55,7 +55,7 @@ public class BaseWeapon : MonoBehaviour
         GetComponent<BasePlayer>().Weapons.Add(this);
         ammoCount = defAmmoCount;
     }
-    void Update()
+    protected virtual void Update()
     {
         if(FireCD > 0.0f)
         {

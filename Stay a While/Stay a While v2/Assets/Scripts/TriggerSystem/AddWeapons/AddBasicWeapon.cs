@@ -9,7 +9,8 @@ public enum BasicWeapon
     Crossbow,
     MissileLauncher,
     Grenades,
-    Airstrike
+    Airstrike,
+    Katana
 }
 
 public class AddBasicWeapon : Triggerable 
@@ -45,6 +46,9 @@ public class AddBasicWeapon : Triggerable
                     break;
                 case BasicWeapon.Airstrike:
                     ObjectSingleton.Instance.playerList[i].AddComponent<BaseWeapon>().Init(1, 1, 1, 0f, 5.0f, "Airstrike");
+                    break;
+                case BasicWeapon.Katana:
+                    ObjectSingleton.Instance.playerList[i].AddComponent<Katana>();
                     break;
             }
 

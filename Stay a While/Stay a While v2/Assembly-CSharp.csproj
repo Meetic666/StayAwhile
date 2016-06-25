@@ -56,6 +56,7 @@
      <Compile Include="Assets\Scripts\Player\BaseProjectile.cs" />
      <Compile Include="Assets\Scripts\Player\BaseWeapon.cs" />
      <Compile Include="Assets\Scripts\Player\ExplosiveProjectile.cs" />
+     <Compile Include="Assets\Scripts\Player\Katana.cs" />
      <Compile Include="Assets\Scripts\Player\ObjectSingleton.cs" />
      <Compile Include="Assets\Scripts\Static\ConstantsAndVariables.cs" />
      <Compile Include="Assets\Scripts\TriggerSystem\AddWeapons\AddBasicWeapon.cs" />
