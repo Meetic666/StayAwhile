@@ -34,17 +34,14 @@ public class Katana : BaseWeapon
         {
             restartTimer = RestartTime;
             Vector2 dir = transform.TransformPoint(AttackSequence[attackIndex].startPoint) - transform.TransformPoint(AttackSequence[attackIndex].endPoint);
-
-            Ray attackRay = new Ray(transform.TransformPoint(AttackSequence[attackIndex].startPoint), dir.normalized);
-
-            RaycastHit2D[] hits = Physics2D.GetRayIntersectionAll(attackRay, Vector2.Distance(transform.TransformPoint(AttackSequence[attackIndex].startPoint), transform.TransformPoint(AttackSequence[attackIndex].endPoint)), maskToHit);
+            RaycastHit2D[] hits = Physics2D.RaycastAll((Vector2)transform.TransformPoint(AttackSequence[attackIndex].startPoint),dir.normalized, Vector2.Distance(transform.TransformPoint(AttackSequence[attackIndex].startPoint), transform.TransformPoint(AttackSequence[attackIndex].endPoint)), maskToHit);
 
             if (hits.Length > 0)
             {
                 for (int i = 0; i < hits.Length; i++)
                 {
                     hits[i].collider.gameObject.GetComponent<BaseEnemy>().DealDamage(AttackSequence[attackIndex].Damage);
-
+                    
                 }
             }
 
