@@ -107,13 +107,4 @@ public class BasePlayer : MonoBehaviour
         Destroy(gameObject);
 
     }
-    public virtual void Damage(float Damage)
-    {
-        Health -= Damage;
-    }
-
-
-
-
-
 }
