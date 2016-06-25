@@ -45,10 +45,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Scripts\Enemies\BaseEnemy.cs" />
+     <Compile Include="Assets\Scripts\Enemies\Clown.cs" />
      <Compile Include="Assets\Scripts\EventManagement\EventData.cs" />
      <Compile Include="Assets\Scripts\EventManagement\EventManager.cs" />
      <Compile Include="Assets\Scripts\EventManagement\TestEvent.cs" />
+     <Compile Include="Assets\Scripts\ObjecPooling\ObjectPool.cs" />
+     <Compile Include="Assets\Scripts\ObjecPooling\TestPooling.cs" />
      <Compile Include="Assets\Scripts\Player\BasePlayer.cs" />
+     <Compile Include="Assets\Scripts\Player\BaseProjectile.cs" />
      <Compile Include="Assets\Scripts\Player\BaseWeapon.cs" />
      <Compile Include="Assets\Scripts\Player\ObjectSingleton.cs" />
      <Compile Include="Assets\Scripts\Static\ConstantsAndVariables.cs" />
