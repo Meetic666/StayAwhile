@@ -55,8 +55,10 @@
      <Compile Include="Assets\Scripts\Player\BasePlayer.cs" />
      <Compile Include="Assets\Scripts\Player\BaseProjectile.cs" />
      <Compile Include="Assets\Scripts\Player\BaseWeapon.cs" />
+     <Compile Include="Assets\Scripts\Player\ExplosiveProjectile.cs" />
      <Compile Include="Assets\Scripts\Player\ObjectSingleton.cs" />
      <Compile Include="Assets\Scripts\Static\ConstantsAndVariables.cs" />
+     <Compile Include="Assets\Scripts\TriggerSystem\AddWeapons\AddBasicWeapon.cs" />
      <Compile Include="Assets\Scripts\TriggerSystem\Control\DeactivateTriggers.cs" />
      <Compile Include="Assets\Scripts\TriggerSystem\Control\ResetTriggers.cs" />
      <Compile Include="Assets\Scripts\TriggerSystem\Control\SceneLoader.cs" />

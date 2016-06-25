@@ -10,7 +10,7 @@ public class BasePlayer : MonoBehaviour
     public List<BaseWeapon> Weapons = new List<BaseWeapon>();
     float MoveSpeed;
     int activeWeaponNum = 0;
-    float Health;
+    public float Health;
     float FuelAmount = 0;
 
     protected virtual void Init(int player, float StartingFuel)
@@ -107,7 +107,7 @@ public class BasePlayer : MonoBehaviour
         {
             vertical = 0.0f;
         }
-        gameObject.transform.position += new Vector3(horizontal * MoveSpeed, vertical * MoveSpeed);
+        gameObject.transform.position += new Vector3(horizontal * MoveSpeed * Time.deltaTime, vertical * MoveSpeed * Time.deltaTime);
     }
 
     protected virtual void RotatePlayer(float horizontal, float vertical)
@@ -128,7 +128,7 @@ public class BasePlayer : MonoBehaviour
         {
             Health -= value;
 
-            if (Health <= 0)
+            if (Health <= 0.0f)
             {
                 Death();
             }

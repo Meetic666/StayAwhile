@@ -37,7 +37,6 @@ public class ShapeDetector : Triggerable
 
     protected virtual void OnDetectionStart(GameObject detectedObj)
     {
-        Debug.Log("Detection Start");
         objAdder temp = new objAdder();
         temp.obj = detectedObj;
         temp.timer = 0.1f;
@@ -50,7 +49,7 @@ public class ShapeDetector : Triggerable
     }
     protected virtual void OnDetectionStay(GameObject detectedObj)
     {
-        Debug.Log("Detection Stay");
+
         for(int i = 0; i < detectedObjects.Count; i++)
         {
             if(detectedObjects[i].obj == detectedObj)
@@ -70,7 +69,6 @@ public class ShapeDetector : Triggerable
     }
     protected virtual void OnDetectionEnd(GameObject detectedObj)
     {
-        Debug.Log("Detection End");
         if (TriggerOnLeave == true)
         {
             base.Update();

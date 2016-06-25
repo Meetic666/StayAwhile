@@ -5,7 +5,7 @@ public class BaseWeapon : MonoBehaviour
 {
     public int clipCount = 0;
     protected int MaxClipCount = 8;
-    int ammoCount;
+    public int ammoCount;
     protected int defAmmoCount = 24;
     protected int maxAmmoCount = 128;
     float FireCD;
@@ -13,15 +13,27 @@ public class BaseWeapon : MonoBehaviour
     public bool reloading = false;
     public GameObject bulletPrefab;
     public float WeaponSpread = 0.5f;
-    public AnimationClip reloadAnimClip;
-    public AnimationClip idleAnimClip;
-    public string WeaponName = "Pistol";
-    Animation anim;
+    AnimationClip reloadAnimClip;
+    AnimationClip idleAnimClip;
+    public string WeaponName = "Base";
+    protected Animation anim;
+
+    public virtual void Init(int ClipCount, int DefAmmoCount, int MaxAmmo, float newFireRate, float newWeaponSpread, string newWeaponName)
+    {
+        MaxClipCount = ClipCount;
+        defAmmoCount = DefAmmoCount;
+        maxAmmoCount = MaxAmmo;
+        FireRate = newFireRate;
+        WeaponSpread = newWeaponSpread;
+        WeaponName = newWeaponName;
+    }
+
     void Start()
     {
         this.enabled = false;
-        bulletPrefab = Resources.Load("Prefabs/Weapons/Bullets/BaseProjectile") as GameObject;
-
+        bulletPrefab = Resources.Load("Prefabs/Weapons/Bullets/" + WeaponName + "Projectile") as GameObject;
+        //reloadAnimClip = Resources.Load("Animations/Weapons/ + WeaponName + "Reload" ) as AnimationClip;
+        //idleAnimClip = Resources.Load("Animations/Weapons/ + WeaponName + "Idle" ) as AnimationClip;
         anim = GetComponent<Animation>();
         for(int i = 0; i < GetComponent<BasePlayer>().Weapons.Count; i++)
         {
