@@ -44,6 +44,7 @@ public class Katana : BaseWeapon
                 for (int i = 0; i < hits.Length; i++)
                 {
                     hits[i].collider.gameObject.GetComponent<BaseEnemy>().DealDamage(AttackSequence[attackIndex].Damage);
+
                 }
             }
 
