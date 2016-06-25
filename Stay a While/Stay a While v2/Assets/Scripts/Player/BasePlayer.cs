@@ -11,7 +11,8 @@ public class BasePlayer : MonoBehaviour
     float MoveSpeed;
     int activeWeaponNum = 0;
     public float Health;
-    float FuelAmount = 0;
+    public float FuelAmount = 0;
+    public float Defense = 0;
 
     protected virtual void Init(int player, float StartingFuel)
     {
@@ -121,12 +122,24 @@ public class BasePlayer : MonoBehaviour
     {
         ObjectSingleton.Instance.playerList.Remove(this.gameObject);
     }
+    public void AddDefense(float value)
+    {
+        if(Defense < 50.0f)
+        {
+            Defense += value;
 
+        }
+
+        if (Defense > 50.0f)
+            Defense = 50.0f;
+    }
     public void Damage(float value)
     {
         if (takesDamage == true)
         {
-            Health -= value;
+
+            Defense -= value;
+            Health -= Defense > 0 ? 0 : Defense;
 
             if (Health <= 0.0f)
             {

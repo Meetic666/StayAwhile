@@ -60,7 +60,9 @@
      <Compile Include="Assets\Scripts\Player\ObjectSingleton.cs" />
      <Compile Include="Assets\Scripts\Static\ConstantsAndVariables.cs" />
      <Compile Include="Assets\Scripts\TriggerSystem\AddWeapons\AddBasicWeapon.cs" />
+     <Compile Include="Assets\Scripts\TriggerSystem\Control\AddToFactor.cs" />
      <Compile Include="Assets\Scripts\TriggerSystem\Control\DeactivateTriggers.cs" />
+     <Compile Include="Assets\Scripts\TriggerSystem\Control\IncreaseRadius.cs" />
      <Compile Include="Assets\Scripts\TriggerSystem\Control\ResetTriggers.cs" />
      <Compile Include="Assets\Scripts\TriggerSystem\Control\SceneLoader.cs" />
      <Compile Include="Assets\Scripts\TriggerSystem\Control\TriggerOnce.cs" />
@@ -69,6 +71,9 @@
      <Compile Include="Assets\Scripts\TriggerSystem\Detectors\AxisDetector.cs" />
      <Compile Include="Assets\Scripts\TriggerSystem\Detectors\BoxDetector.cs" />
      <Compile Include="Assets\Scripts\TriggerSystem\Detectors\CircleDetector2D.cs" />
+     <Compile Include="Assets\Scripts\TriggerSystem\Detectors\DefenseCircle.cs" />
+     <Compile Include="Assets\Scripts\TriggerSystem\Detectors\FuelDetector.cs" />
+     <Compile Include="Assets\Scripts\TriggerSystem\Detectors\HealingCircle.cs" />
      <Compile Include="Assets\Scripts\TriggerSystem\Detectors\ShapeDetector.cs" />
      <Compile Include="Assets\Scripts\TriggerSystem\Detectors\SphereDetector.cs" />
      <Compile Include="Assets\Scripts\TriggerSystem\Detectors\SquareDetector2D.cs" />
