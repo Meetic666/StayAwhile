@@ -14,6 +14,8 @@ public class ObjectPool : MonoBehaviour
 
     static ObjectPool s_Instance;
 
+    public int m_NumberOfPrefabsToInstantiateWhenRunningShort = 4;
+
     Dictionary<GameObject, List<GameObject>> m_ObjectPool;
 
     Transform m_Transform;
@@ -39,16 +41,7 @@ public class ObjectPool : MonoBehaviour
 
         if (initialCount < numberOfInstancesToRegister)
         {
-            for (int i = 0; i < numberOfInstancesToRegister - initialCount; i++)
-            {
-                GameObject newObject = (GameObject)Object.Instantiate(prefab, Vector3.left * 10000.0f, Quaternion.identity);
-
-                m_ObjectPool[prefab].Add(newObject);
-
-                newObject.transform.parent = m_Transform;
-
-                newObject.SetActive(false);
-            }
+            AddNewInstances(prefab, numberOfInstancesToRegister - initialCount);
         }
     }
 	
@@ -56,38 +49,54 @@ public class ObjectPool : MonoBehaviour
     {
         if (!m_ObjectPool.ContainsKey(prefab))
         {
-            m_ObjectPool.Add(prefab, new List<GameObject>(4));
+            m_ObjectPool.Add(prefab, new List<GameObject>(m_NumberOfPrefabsToInstantiateWhenRunningShort));
 
-            for (int i = 0; i < 4; i++)
-            {
-                GameObject newObject = (GameObject)GameObject.Instantiate(prefab, Vector3.left * 10000000.0f, Quaternion.identity);
-
-                m_ObjectPool[prefab].Add(newObject);
-
-                newObject.SetActive(false);
-            }
+            AddNewInstances(prefab, m_NumberOfPrefabsToInstantiateWhenRunningShort);
         }
 
         GameObject instance = null;
         GameObject currentObject = null;
 
-        for(int i = 0; i < m_ObjectPool[prefab].Count; i++)
+        int listCount = m_ObjectPool[prefab].Count;
+
+        for (int i = 0; i < listCount; i++)
         {
             currentObject = m_ObjectPool[prefab][i];
 
             if (!currentObject.activeSelf)
             {
-                currentObject.SetActive(true);
-
-                currentObject.transform.position = position;
-                currentObject.transform.rotation = rotation;
-
                 instance = currentObject;
 
                 break;
             }
         }
 
+        if(instance == null)
+        {
+            AddNewInstances(prefab, m_NumberOfPrefabsToInstantiateWhenRunningShort);
+
+            instance = m_ObjectPool[prefab][listCount];
+        }
+
+        instance.SetActive(true);
+
+        instance.transform.position = position;
+        instance.transform.rotation = rotation;
+
         return instance;
+    }
+
+    void AddNewInstances(GameObject prefab, int numberToCreate)
+    {
+        for (int i = 0; i < numberToCreate; i++)
+        {
+            GameObject newObject = (GameObject)GameObject.Instantiate(prefab, Vector3.left * 10000000.0f, Quaternion.identity);
+
+            m_ObjectPool[prefab].Add(newObject);
+
+            newObject.transform.parent = m_Transform;
+
+            newObject.SetActive(false);
+        }
     }
 }
