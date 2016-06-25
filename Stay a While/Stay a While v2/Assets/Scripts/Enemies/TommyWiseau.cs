@@ -1,23 +1,24 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Clown : BaseEnemy
+public class TommyWiseau : BaseEnemy
 {
     [SerializeField]
-    private float attackDamage;
+    private GameObject FootBall;
+    [SerializeField]
+    private Transform SpawnPoint;
 
     protected override IEnumerator attacking_cr()
     {
         base.attacking_cr();
-        //Play attack animation
-
-        if(Vector3.Distance(ObjectSingleton.Instance.playerList[targetIndex].transform.position, this.transform.position) <= attackRange)
-        {
-            ObjectSingleton.Instance.playerList[targetIndex].GetComponent<BasePlayer>().Damage(attackDamage);
-        }
-        
+        animator.SetTrigger("StateChange");
         yield return new WaitForSeconds(attackSpeed);
         yield return null;
+    }
+
+    private void ThrowFootBall()
+    {
+        Instantiate(FootBall, SpawnPoint.position, Quaternion.Euler(0.0f,0.0f,transform.rotation.eulerAngles.z/2.0f));
     }
 
     protected override IEnumerator died_cr()
@@ -36,6 +37,7 @@ public class Clown : BaseEnemy
     protected override IEnumerator spawned_cr()
     {
         base.spawned_cr();
+        animator.SetTrigger("StateChange");
         StartCoroutine(checkTarget_cr());
         ChangeState(State.Moving);
         yield return null;
@@ -46,12 +48,15 @@ public class Clown : BaseEnemy
         while (true)
         {
             float dist = Vector3.Distance(ObjectSingleton.Instance.playerList[0].transform.position, this.transform.position);
-            if(Vector3.Distance(ObjectSingleton.Instance.playerList[1].transform.position, this.transform.position) < dist)
-            { target = ObjectSingleton.Instance.playerList[1].transform; }
-            else { target = ObjectSingleton.Instance.playerList[0].transform; }
-
+            if(ObjectSingleton.Instance.playerList.Count > 1)
+            {
+                if (Vector3.Distance(ObjectSingleton.Instance.playerList[1].transform.position, this.transform.position) < dist)
+                { target = ObjectSingleton.Instance.playerList[1].transform; }
+                else { target = ObjectSingleton.Instance.playerList[0].transform; }
+            }
+            
             yield return null;
         }
-        
+
     }
 }

@@ -1,8 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class BaseEnemy : MonoBehaviour
 {
+    [SerializeField]
+    protected GameObject Fuel;
+
     [SerializeField]
     protected float speed;
     [SerializeField]
@@ -22,36 +26,46 @@ public class BaseEnemy : MonoBehaviour
         None,
         Spawned
     }
-    protected float statePause;
     protected int targetIndex;
     protected Transform target;
-    protected IEnumerator UPDATE;
+    protected Animator animator;
+    protected List<GameObject> obstacles;
 
-    protected virtual void Start()
+    void Start()
     {
+        obstacles = new List<GameObject>();
+        animator = GetComponent<Animator>();
         healthMAX = health;
-        statePause = 0;
         currentState = State.Spawned;
-        targetIndex = Random.Range(0, 2);
-        target = ObjectSingleton.Instance.playerList[targetIndex].transform;
-        UPDATE = update_cr();
-        StartCoroutine(UPDATE);
+        StartCoroutine(update_cr());
     }
 
     protected virtual IEnumerator update_cr()
     {
+        yield return new WaitForSeconds(1);
+        if (target == null)
+        {
+            targetIndex = Random.Range(0, ObjectSingleton.Instance.playerList.Count);
+            target = ObjectSingleton.Instance.playerList[targetIndex].transform;
+        }
+        
         while(true)
         {
-            switch(currentState)
+            switch (currentState)
             {
-                case State.Moving: Moving(); break;
-                case State.Attacking: Attacking(); break;
-                case State.Dead: Died(); break;
-                case State.Spawned: Spawned(); break;    
+                case State.Moving: yield return StartCoroutine(moving_cr()); break;
+                case State.Attacking: yield return StartCoroutine(attacking_cr()); break;
+                case State.Dead: yield return StartCoroutine(died_cr()); break;
+                case State.Spawned: yield return StartCoroutine(spawned_cr()); break;    
                 default: break;
             }
-            if (statePause > 0) { yield return new WaitForSeconds(statePause); }
-            else { yield return null; }
+
+            Vector3 dir = (target.position - this.transform.position).normalized;
+            dir.z = 0;
+            // = dir;
+            this.transform.up = Vector3.RotateTowards(this.transform.up, dir, 0.3f, 0);
+
+            yield return null;
         }
     }
 
@@ -59,41 +73,76 @@ public class BaseEnemy : MonoBehaviour
     {
         switch(next)
         {
-            case State.Moving: currentState = State.Moving; statePause = 0; break;
-            case State.Attacking: currentState = State.Attacking; statePause = attackSpeed; break;
-            case State.Dead: currentState = State.Dead; statePause = 0; break;
-            case State.Spawned: currentState = State.Spawned; statePause = 0; break;
-            default: currentState = State.None; statePause = 0; break;
+            case State.Moving: currentState = State.Moving; break;
+            case State.Attacking: currentState = State.Attacking; break;
+            case State.Dead: currentState = State.Dead; break;
+            case State.Spawned: currentState = State.Spawned; break;
+            default: currentState = State.None; break;
         }
     }
     
-    protected virtual void Moving()
+    protected virtual IEnumerator moving_cr()
     {
-        if((target.position - this.transform.position).magnitude <= attackRange)
-        { ChangeState(State.Attacking); return; }
+        if ((target.position - this.transform.position).magnitude <= attackRange)
+        { ChangeState(State.Attacking); yield return null; }
+        else
+        {
+            Vector3 dir = (target.position - this.transform.position).normalized;
+            this.transform.position += dir * speed * Time.deltaTime;
+            
+            for(int i = 0; i < obstacles.Count; i++)
+            {
+                if(Vector3.Distance(obstacles[i].transform.position, this.transform.position) < obstacles[i].GetComponent<CircleCollider2D>().radius * obstacles[i].transform.localScale.x)
+                {
+                    Vector3 vec = obstacles[i].transform.position - this.transform.position;
+                    vec.Normalize();
+                    float range = Vector3.Distance(obstacles[i].transform.position, this.transform.position) - (obstacles[i].GetComponent<CircleCollider2D>().radius * obstacles[i].transform.localScale.x);
+                    this.transform.position += vec * range;
+                }
+            }
 
-        Vector3 dir = (target.position - this.transform.position).normalized;
-        this.transform.up = dir;
-        this.transform.position += dir * speed * Time.deltaTime;
+            yield return null;
+        }
     }
 
-    protected virtual void Attacking()
+    protected virtual IEnumerator attacking_cr()
     {
-
+        yield return null;
     }
 
-    protected virtual void Died()
+    protected virtual IEnumerator died_cr()
     {
         ChangeState(State.None);
+        yield return null;
     }
 
-    protected virtual void Spawned()
+    protected virtual IEnumerator spawned_cr()
     {
-
+        yield return null;
     }
 
     public virtual void DealDamage(float dmg)
     {
         health -= dmg;
+        if(health <= 0)
+        {
+            ChangeState(State.Dead);
+        }
+    }
+
+    protected void OnTriggerEnter2D (Collider2D other)
+    {
+        if (other.tag == "Obstacle")
+        {
+            obstacles.Add(other.gameObject);
+        }
+    }
+
+    protected void OnTriggerExit2D (Collider2D other)
+    {
+        if (other.tag == "Obstacle")
+        {
+            obstacles.Remove(other.gameObject);
+        }
     }
 }

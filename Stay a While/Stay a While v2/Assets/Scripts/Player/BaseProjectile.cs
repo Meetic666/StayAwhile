@@ -20,6 +20,10 @@ public class BaseProjectile : MonoBehaviour
                 hit.collider.GetComponent<BaseEnemy>().DealDamage(DamageToDeal);
             }
 
+            if (hit.collider.gameObject.layer == 8)
+            {
+                hit.collider.GetComponent<BasePlayer>().Damage(DamageToDeal);
+            }
 
             if (Piercing == true)
             {
@@ -27,10 +31,7 @@ public class BaseProjectile : MonoBehaviour
                 gameObject.SetActive(false);
             }
         }
-
-
-
-
+        
     }
 
 }

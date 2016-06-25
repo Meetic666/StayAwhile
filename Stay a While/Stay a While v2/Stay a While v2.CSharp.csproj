@@ -63,18 +63,26 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\Camera\CustomCamera.cs" />
     <Compile Include="Assets\Scripts\Enemies\BaseEnemy.cs" />
     <Compile Include="Assets\Scripts\Enemies\Clown.cs" />
+    <Compile Include="Assets\Scripts\Enemies\TommyWiseau.cs" />
     <Compile Include="Assets\Scripts\EventManagement\EventData.cs" />
     <Compile Include="Assets\Scripts\EventManagement\EventManager.cs" />
     <Compile Include="Assets\Scripts\EventManagement\TestEvent.cs" />
     <Compile Include="Assets\Scripts\ObjecPooling\ObjectPool.cs" />
     <Compile Include="Assets\Scripts\ObjecPooling\TestPooling.cs" />
     <Compile Include="Assets\Scripts\Player\BasePlayer.cs" />
+    <Compile Include="Assets\Scripts\Player\BaseProjectile.cs" />
     <Compile Include="Assets\Scripts\Player\BaseWeapon.cs" />
+    <Compile Include="Assets\Scripts\Player\ExplosiveProjectile.cs" />
+    <Compile Include="Assets\Scripts\Player\Katana.cs" />
     <Compile Include="Assets\Scripts\Player\ObjectSingleton.cs" />
     <Compile Include="Assets\Scripts\Static\ConstantsAndVariables.cs" />
+    <Compile Include="Assets\Scripts\TriggerSystem\AddWeapons\AddBasicWeapon.cs" />
+    <Compile Include="Assets\Scripts\TriggerSystem\Control\AddToFactor.cs" />
     <Compile Include="Assets\Scripts\TriggerSystem\Control\DeactivateTriggers.cs" />
+    <Compile Include="Assets\Scripts\TriggerSystem\Control\IncreaseRadius.cs" />
     <Compile Include="Assets\Scripts\TriggerSystem\Control\ResetTriggers.cs" />
     <Compile Include="Assets\Scripts\TriggerSystem\Control\SceneLoader.cs" />
     <Compile Include="Assets\Scripts\TriggerSystem\Control\TriggerOnce.cs" />
@@ -83,6 +91,9 @@
     <Compile Include="Assets\Scripts\TriggerSystem\Detectors\AxisDetector.cs" />
     <Compile Include="Assets\Scripts\TriggerSystem\Detectors\BoxDetector.cs" />
     <Compile Include="Assets\Scripts\TriggerSystem\Detectors\CircleDetector2D.cs" />
+    <Compile Include="Assets\Scripts\TriggerSystem\Detectors\DefenseCircle.cs" />
+    <Compile Include="Assets\Scripts\TriggerSystem\Detectors\FuelDetector.cs" />
+    <Compile Include="Assets\Scripts\TriggerSystem\Detectors\HealingCircle.cs" />
     <Compile Include="Assets\Scripts\TriggerSystem\Detectors\ShapeDetector.cs" />
     <Compile Include="Assets\Scripts\TriggerSystem\Detectors\SphereDetector.cs" />
     <Compile Include="Assets\Scripts\TriggerSystem\Detectors\SquareDetector2D.cs" />
