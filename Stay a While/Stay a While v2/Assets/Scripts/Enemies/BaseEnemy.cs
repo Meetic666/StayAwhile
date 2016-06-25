@@ -123,13 +123,13 @@ public class BaseEnemy : MonoBehaviour
 
     public virtual void DealDamage(float dmg)
     {
-        Debug.Log("Regis");
         health -= dmg;
         if(health <= 0)
         {
             ChangeState(State.Dead);
         }
     }
+
     protected void OnTriggerEnter2D (Collider2D other)
     {
         if (other.tag == "Obstacle")

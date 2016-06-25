@@ -25,6 +25,20 @@ public class Spawner : MonoBehaviour
     private int numberOfWaves;
     private bool endlessSpawn;
 
+    void Start()
+    {
+        StartCoroutine(test_cr());
+    }
+
+    private IEnumerator test_cr()
+    {
+        while(true)
+        {
+            SpawnWave();
+            yield return new WaitForSeconds(1);
+        }
+    }
+
     public void SpawnWave(int size = 1)
     {
         waveSize = size;
