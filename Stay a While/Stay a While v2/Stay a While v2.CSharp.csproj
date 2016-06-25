@@ -63,6 +63,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\Enemies\BaseEnemy.cs" />
+    <Compile Include="Assets\Scripts\Enemies\Clown.cs" />
     <Compile Include="Assets\Scripts\EventManagement\EventData.cs" />
     <Compile Include="Assets\Scripts\EventManagement\EventManager.cs" />
     <Compile Include="Assets\Scripts\EventManagement\TestEvent.cs" />
