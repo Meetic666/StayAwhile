@@ -12,7 +12,7 @@ public class CustomCamera : MonoBehaviour
     private int playerIndex;
     private float movement;
     
-    public void CameraShake(float force = 1)
+    public void CameraShake(float force = 0.75f)
     {
         axis = Vector3.one;
         axis.z = 0;
@@ -55,7 +55,6 @@ public class CustomCamera : MonoBehaviour
                 axis *= force;
                 pos.x = Random.Range(-axis.x, axis.x);
                 pos.y = Random.Range(-axis.y, axis.y);
-                pos.z = Random.Range(-axis.z, axis.z);
 
                 this.transform.position = origin + pos;
 

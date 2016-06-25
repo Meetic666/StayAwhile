@@ -9,7 +9,7 @@ public class Clown : BaseEnemy
     protected override IEnumerator attacking_cr()
     {
         base.attacking_cr();
-        //Play attack animation
+        animator.SetTrigger("StateChange");
 
         if(Vector3.Distance(ObjectSingleton.Instance.playerList[targetIndex].transform.position, this.transform.position) <= attackRange)
         {
@@ -43,15 +43,16 @@ public class Clown : BaseEnemy
 
     private IEnumerator checkTarget_cr()
     {
-        while (true)
+        float players = ObjectSingleton.Instance.playerList.Count;
+        while (players > 1)
         {
             float dist = Vector3.Distance(ObjectSingleton.Instance.playerList[0].transform.position, this.transform.position);
+            
             if(Vector3.Distance(ObjectSingleton.Instance.playerList[1].transform.position, this.transform.position) < dist)
             { target = ObjectSingleton.Instance.playerList[1].transform; }
             else { target = ObjectSingleton.Instance.playerList[0].transform; }
 
             yield return null;
         }
-        
     }
 }

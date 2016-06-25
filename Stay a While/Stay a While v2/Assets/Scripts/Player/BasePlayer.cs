@@ -138,8 +138,16 @@ public class BasePlayer : MonoBehaviour
         if (takesDamage == true)
         {
 
-            Defense -= value;
-            Health -= Defense > 0 ? 0 : Defense;
+            if(Defense >= value)
+            {
+                Defense -= value;
+            }
+            else
+            {
+                value -= Defense;
+                Defense = 0;
+                Health -= value;
+            }
 
             if (Health <= 0.0f)
             {
