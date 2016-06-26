@@ -28,7 +28,7 @@ public class Octopus : BaseEnemy
             yield return null;
         }
         
-        animator.SetTrigger("StateChange");
+        //animator.SetTrigger("StateChange");
 
         bool pOneDmg = false;
         bool pTwoDmg = false;
