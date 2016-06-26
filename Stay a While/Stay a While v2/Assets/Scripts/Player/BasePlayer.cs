@@ -20,6 +20,7 @@ public class BasePlayer : MonoBehaviour
     public float FuelAmount = 0;
     public float Defense = 0;
 
+    Animator animator;
     DamageEventData m_DamageEventData;
 
     protected virtual void Init(int player, float StartingFuel)
@@ -30,6 +31,7 @@ public class BasePlayer : MonoBehaviour
 
     protected virtual void Start()
     {
+        animator = GetComponent<Animator>();
         Health = MaxHealth;
         MoveSpeed = DefMoveSpeed;
         ObjectSingleton.Instance.playerList.Add(this.gameObject);
@@ -69,7 +71,7 @@ public class BasePlayer : MonoBehaviour
                 break;
             default:
 
-                Debug.LogError("Fine, I'll add more players in another patch");
+                Debug.LogError("Fine, I'll add more players in another patch"); // lol.. the lies we tell ourself <3 Greate work though! -TP
                 return;
         }
     }
@@ -91,6 +93,7 @@ public class BasePlayer : MonoBehaviour
             }
 
         }
+        animator.SetInteger("Weapon", activeWeaponNum);
     }
     protected virtual void ReloadButton()
     {
@@ -118,6 +121,7 @@ public class BasePlayer : MonoBehaviour
         {
             vertical = 0.0f;
         }
+        if (horizontal != 0 || vertical != 0) { animator.SetBool("Walking", true); } else { animator.SetBool("Walking", false); }
         gameObject.transform.position += new Vector3(horizontal * MoveSpeed * Time.deltaTime, vertical * MoveSpeed * Time.deltaTime);
     }
 
