@@ -57,7 +57,10 @@ public class ExplosiveProjectile : BaseProjectile
             {
                 if (TimeToDetonate < 0.0f)
                 {
-                    animator.SetTrigger("Death");
+                    if(animator)
+                    {
+                        animator.SetTrigger("Death");
+                    }
 
                     RaycastHit2D hit = Physics2D.CircleCast(gameObject.transform.position, Radius, transform.up, 0.1f, maskToHit);
                     if (hit == true)

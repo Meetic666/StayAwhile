@@ -73,6 +73,7 @@
     <Compile Include="Assets\Scripts\Enemies\TommyWiseau.cs" />
     <Compile Include="Assets\Scripts\EventManagement\EventData.cs" />
     <Compile Include="Assets\Scripts\EventManagement\EventManager.cs" />
+    <Compile Include="Assets\Scripts\EventManagement\ResetEvents.cs" />
     <Compile Include="Assets\Scripts\EventManagement\TestEvent.cs" />
     <Compile Include="Assets\Scripts\Fire\FireAnimation.cs" />
     <Compile Include="Assets\Scripts\Fire\FireLight.cs" />
@@ -113,6 +114,7 @@
     <Compile Include="Assets\Scripts\TriggerSystem\Environment\WaitForObjectActivation.cs" />
     <Compile Include="Assets\Scripts\TriggerSystem\Triggerable.cs" />
     <Compile Include="Assets\Scripts\UI\HealthBar.cs" />
+    <Compile Include="Assets\Scripts\Weapons\Drop_Spawner.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Shaders\DarknessShader.shader" />

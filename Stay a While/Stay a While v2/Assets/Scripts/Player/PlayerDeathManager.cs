@@ -35,9 +35,9 @@ public class PlayerDeathManager : MonoBehaviour
 
         BasePlayer player = ((PlayerDeathEventData)data).m_Player;
 
-        StartCoroutine(SetRespawnTimer(player));
-
         player.gameObject.SetActive(false);
+
+        StartCoroutine(SetRespawnTimer(player));
 
         m_PlayerDead[player.playerNum] = true;
 

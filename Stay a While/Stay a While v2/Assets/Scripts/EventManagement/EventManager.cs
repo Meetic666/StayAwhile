@@ -49,6 +49,11 @@ public class EventManager
         }
     }
 
+    public void ClearListeners()
+    {
+        m_EventDelegates.Clear();
+    }
+
     public void SendEvent(EventData eventData)
     {
         System.Type type = eventData.GetType();
