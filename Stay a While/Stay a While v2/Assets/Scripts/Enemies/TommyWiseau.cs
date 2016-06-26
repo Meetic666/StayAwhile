@@ -10,9 +10,10 @@ public class TommyWiseau : BaseEnemy
 
     protected override IEnumerator attacking_cr()
     {
-        base.attacking_cr();
         animator.SetTrigger("StateChange");
         yield return new WaitForSeconds(attackSpeed);
+        if ((target.position - this.transform.position).magnitude > attackRange)
+        { ChangeState(State.Moving); }
         yield return null;
     }
 
@@ -24,12 +25,11 @@ public class TommyWiseau : BaseEnemy
     protected override IEnumerator died_cr()
     {
         base.died_cr();
-        //Spawn feul
+        //Spawn fuel
         Instantiate(Fuel, this.transform.position, Quaternion.identity);
-
-        //Temp
+        
         StopAllCoroutines();
-        Destroy(this.gameObject);
+        this.gameObject.SetActive(false);
 
         yield return null;
     }

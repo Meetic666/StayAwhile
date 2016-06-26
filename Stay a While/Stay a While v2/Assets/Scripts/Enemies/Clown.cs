@@ -8,7 +8,6 @@ public class Clown : BaseEnemy
 
     protected override IEnumerator attacking_cr()
     {
-        base.attacking_cr();
         animator.SetTrigger("StateChange");
 
         if(Vector3.Distance(ObjectSingleton.Instance.playerList[targetIndex].transform.position, this.transform.position) <= attackRange)
@@ -17,18 +16,19 @@ public class Clown : BaseEnemy
         }
         
         yield return new WaitForSeconds(attackSpeed);
+        if ((target.position - this.transform.position).magnitude > attackRange)
+        { ChangeState(State.Moving); }
         yield return null;
     }
 
     protected override IEnumerator died_cr()
     {
         base.died_cr();
-        //Spawn feul
+        //Spawn fuel
         Instantiate(Fuel, this.transform.position, Quaternion.identity);
-
-        //Temp
+        
         StopAllCoroutines();
-        Destroy(this.gameObject);
+        this.gameObject.SetActive(false);
 
         yield return null;
     }

@@ -5,6 +5,8 @@ using System.Collections.Generic;
 public class Spawner : MonoBehaviour
 {
     [SerializeField]
+    private List<Transform> obstacles;
+    [SerializeField]
     private GameObject Clown;
     [SerializeField]
     private GameObject FootBallPlayer;
@@ -75,13 +77,28 @@ public class Spawner : MonoBehaviour
     {
         for(int i = 0; i < numberOfWaves; i++)
         {
-            Vector3 pos = Vector3.zero;
-            pos.x = Random.Range(-range, range);
-            pos.y = Random.Range(-range, range);
-            pos += this.transform.position;
+            for(int j = 0; j < waveSize; j++)
+            {
+                Vector3 pos = Vector3.zero;
+                pos.x = Random.Range(-range, range);
+                pos.y = Random.Range(-range, range);
+                pos += this.transform.position;
 
-            ObjectPool.Instance.Instantiate(prefab, pos, Quaternion.identity);
+                for(int k = 0; k < obstacles.Count; k++)
+                {
+                    if(Vector3.Distance(obstacles[k].position, pos) <= obstacles[k].GetComponent<CircleCollider2D>().radius * obstacles[k].localScale.x)
+                    {
+                        pos = Vector3.zero;
+                        pos.x = Random.Range(-range, range);
+                        pos.y = Random.Range(-range, range);
+                        pos += this.transform.position;
+                        k = -1;
+                    }
+                }
 
+                ObjectPool.Instance.Instantiate(prefab, pos, Quaternion.identity);
+            }
+            
             if (endlessSpawn) { i--; }
             if (i > 0) { yield return new WaitForSeconds(spawnDelay); }
             else { yield return null; }
