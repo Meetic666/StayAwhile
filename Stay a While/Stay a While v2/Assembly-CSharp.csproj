@@ -45,13 +45,21 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Scripts\AudioManagement\SFXManager.cs" />
      <Compile Include="Assets\Scripts\Camera\CustomCamera.cs" />
      <Compile Include="Assets\Scripts\Enemies\BaseEnemy.cs" />
      <Compile Include="Assets\Scripts\Enemies\Clown.cs" />
+     <Compile Include="Assets\Scripts\Enemies\Nurse.cs" />
+     <Compile Include="Assets\Scripts\Enemies\Octopus.cs" />
+     <Compile Include="Assets\Scripts\Enemies\Spawner.cs" />
      <Compile Include="Assets\Scripts\Enemies\TommyWiseau.cs" />
      <Compile Include="Assets\Scripts\EventManagement\EventData.cs" />
      <Compile Include="Assets\Scripts\EventManagement\EventManager.cs" />
      <Compile Include="Assets\Scripts\EventManagement\TestEvent.cs" />
+     <Compile Include="Assets\Scripts\Fire\FireAnimation.cs" />
+     <Compile Include="Assets\Scripts\Fire\FireLight.cs" />
+     <Compile Include="Assets\Scripts\GraphicalEffects\DarknessManager.cs" />
+     <Compile Include="Assets\Scripts\GraphicalEffects\FlashManager.cs" />
      <Compile Include="Assets\Scripts\ObjecPooling\ObjectPool.cs" />
      <Compile Include="Assets\Scripts\ObjecPooling\TestPooling.cs" />
      <Compile Include="Assets\Scripts\Player\BasePlayer.cs" />
@@ -84,6 +92,8 @@
      <Compile Include="Assets\Scripts\TriggerSystem\Environment\TriggerableLight.cs" />
      <Compile Include="Assets\Scripts\TriggerSystem\Environment\WaitForObjectActivation.cs" />
      <Compile Include="Assets\Scripts\TriggerSystem\Triggerable.cs" />
+     <None Include="Assets\Shaders\FlashShader.shader" />
+     <None Include="Assets\Shaders\DarknessShader.shader" />
  <Reference Include="UnityEngine.UI">
  <HintPath>B:/Work/OttawaGameJam/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>

@@ -40,9 +40,9 @@ public class BaseWeapon : MonoBehaviour
     {
         this.enabled = false;
         bulletPrefab = Resources.Load("Prefabs/Weapons/Bullets/" + WeaponName + "Projectile") as GameObject;
-        //reloadAnimClip = Resources.Load("Animations/Weapons/ + WeaponName + "Reload" ) as AnimationClip;
-        //idleAnimClip = Resources.Load("Animations/Weapons/ + WeaponName + "Idle" ) as AnimationClip;
-        anim = GetComponent<Animation>();
+        reloadAnimClip = Resources.Load("Animations/Weapons/Player" + GetComponent<BasePlayer>().playerNum + WeaponName + "Reload" ) as AnimationClip;
+        idleAnimClip = Resources.Load("Animations/Weapons/Player" + GetComponent<BasePlayer>().playerNum + WeaponName + "Idle" ) as AnimationClip;
+        anim = GetComponentInChildren<Animation>();
         for(int i = 0; i < GetComponent<BasePlayer>().Weapons.Count; i++)
         {
             if(GetComponent<BasePlayer>().Weapons[i].WeaponName == WeaponName)
