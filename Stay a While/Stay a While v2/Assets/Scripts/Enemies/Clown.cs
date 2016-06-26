@@ -50,11 +50,15 @@ public class Clown : BaseEnemy
         float players = ObjectSingleton.Instance.playerList.Count;
         while (players > 1)
         {
-            float dist = Vector3.Distance(ObjectSingleton.Instance.playerList[0].transform.position, this.transform.position);
+            if(ObjectSingleton.Instance.playerList[1].activeSelf)
+            {
+                float dist = Vector3.Distance(ObjectSingleton.Instance.playerList[0].transform.position, this.transform.position);
+
+                if (Vector3.Distance(ObjectSingleton.Instance.playerList[1].transform.position, this.transform.position) < dist)
+                { target = ObjectSingleton.Instance.playerList[1].transform; }
+                else { target = ObjectSingleton.Instance.playerList[0].transform; }
+            }
             
-            if(Vector3.Distance(ObjectSingleton.Instance.playerList[1].transform.position, this.transform.position) < dist)
-            { target = ObjectSingleton.Instance.playerList[1].transform; }
-            else { target = ObjectSingleton.Instance.playerList[0].transform; }
 
             yield return null;
         }
