@@ -86,6 +86,7 @@
     <Compile Include="Assets\Scripts\Player\ExplosiveProjectile.cs" />
     <Compile Include="Assets\Scripts\Player\Katana.cs" />
     <Compile Include="Assets\Scripts\Player\ObjectSingleton.cs" />
+    <Compile Include="Assets\Scripts\Splash\PressAnyKey.cs" />
     <Compile Include="Assets\Scripts\Static\ConstantsAndVariables.cs" />
     <Compile Include="Assets\Scripts\TriggerSystem\AddWeapons\AddBasicWeapon.cs" />
     <Compile Include="Assets\Scripts\TriggerSystem\Control\AddToFactor.cs" />
