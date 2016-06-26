@@ -35,10 +35,15 @@ public class BaseEnemy : MonoBehaviour
 
     ShootEventData m_ShootEventData;
 
-    void Start()
+    void Awake()
     {
         obstacles = new List<GameObject>();
         animator = GetComponent<Animator>();
+    }
+
+    void Start()
+    {
+        
         healthMAX = health;
         currentState = State.Spawned;
         StartCoroutine(update_cr());

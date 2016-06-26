@@ -28,7 +28,9 @@ public class Spawner : MonoBehaviour
 
     [SerializeField]
     private float range;
+    [SerializeField]
     private float spawnDelay;
+    [SerializeField]
     private int waveSize;
     private int numberOfWaves;
     private bool endlessSpawn;
@@ -45,7 +47,7 @@ public class Spawner : MonoBehaviour
             default: prefab = Clown; break;
         }
         ObjectPool.Instance.RegisterPrefab(prefab, 20);
-        SpawnWave(1, 3.0f, true);
+        SpawnWave(waveSize, spawnDelay, true);
     }
 
     private IEnumerator test_cr()
