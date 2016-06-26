@@ -6,6 +6,8 @@ public class IncreaseRadius : Triggerable {
     float Factor = 10.0f;
     public float MaxFactor = 10.0f;
 
+    public float m_FactorDecreaseRate = 0.03f;
+
     public CircleDetector2D[] detectors;
     float[] detectorDefaults;
     void Start()
@@ -27,7 +29,7 @@ public class IncreaseRadius : Triggerable {
         {
             detectors[i].CircleRadius = (detectorDefaults[i] * (i + 1)) * Factor > MaxFactor ? MaxFactor : (detectorDefaults[i] * (i + 1)) * Factor;
             if(Factor > 0.0f)
-                Factor -= 0.03f * Time.deltaTime;
+                Factor -= m_FactorDecreaseRate * Time.deltaTime;
         }
     }
 

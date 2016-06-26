@@ -83,6 +83,7 @@ public class BaseEnemy : MonoBehaviour
             case State.Moving: currentState = State.Moving; break;
             case State.Attacking:
                 currentState = State.Attacking;
+                m_ShootEventData.m_ShotPosition = transform.position;
                 EventManager.Instance.SendEvent(m_ShootEventData);
                 break;
             case State.Dead: currentState = State.Dead; break;

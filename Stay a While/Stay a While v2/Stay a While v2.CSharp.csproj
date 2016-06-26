@@ -74,6 +74,7 @@
     <Compile Include="Assets\Scripts\EventManagement\EventData.cs" />
     <Compile Include="Assets\Scripts\EventManagement\EventManager.cs" />
     <Compile Include="Assets\Scripts\EventManagement\TestEvent.cs" />
+    <Compile Include="Assets\Scripts\Fire\FireAnimation.cs" />
     <Compile Include="Assets\Scripts\Fire\FireLight.cs" />
     <Compile Include="Assets\Scripts\GraphicalEffects\DarknessManager.cs" />
     <Compile Include="Assets\Scripts\GraphicalEffects\FlashManager.cs" />
