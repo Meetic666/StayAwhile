@@ -36,13 +36,13 @@ public class AddBasicWeapon : Triggerable
                     ObjectSingleton.Instance.playerList[i].AddComponent<BaseWeapon>().Init(25, 25, 75, 0.1f, 1.5f, "AR");
                     break;
                 case BasicWeapon.Crossbow:
-                    ObjectSingleton.Instance.playerList[i].AddComponent<BaseWeapon>().Init(1, 3, 10, 0f, 0.3f, "XBow");
+                    ObjectSingleton.Instance.playerList[i].AddComponent<BaseWeapon>().Init(1, 3, 10, 0.5f, 0.3f, "XBow");
                     break;
                 case BasicWeapon.Grenades:
-                    ObjectSingleton.Instance.playerList[i].AddComponent<BaseWeapon>().Init(1, 1, 5, 0f, 3.0f, "Grenade");
+                    ObjectSingleton.Instance.playerList[i].AddComponent<BaseWeapon>().Init(1, 1, 5, 2.0f, 3.0f, "Grenade");
                     break;
                 case BasicWeapon.MissileLauncher:
-                    ObjectSingleton.Instance.playerList[i].AddComponent<BaseWeapon>().Init(1, 1, 1, 0f, 0.0f, "Missile");
+                    ObjectSingleton.Instance.playerList[i].AddComponent<BaseWeapon>().Init(1, 1, 1, 1.0f, 0.0f, "Missile");
                     break;
                 case BasicWeapon.Airstrike:
                     ObjectSingleton.Instance.playerList[i].AddComponent<BaseWeapon>().Init(1, 1, 1, 0f, 5.0f, "Airstrike");
