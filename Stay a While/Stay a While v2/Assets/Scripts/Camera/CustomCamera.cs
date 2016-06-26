@@ -4,7 +4,6 @@ using System.Collections;
 public class CustomCamera : MonoBehaviour
 {
     private bool shaking;
-    private bool lerping;
 
     private float duration;
     private float force;
@@ -12,6 +11,8 @@ public class CustomCamera : MonoBehaviour
     private int playerIndex;
     private float movement;
 
+    private Vector3 offset;
+    private Vector3 origin;
     private Camera _camera;
     private Transform playerOne;
     private Transform playerTwo;
@@ -20,6 +21,8 @@ public class CustomCamera : MonoBehaviour
     
     void Start()
     {
+        offset = Vector3.zero;
+        origin = this.transform.position;
         _camera = GetComponent<Camera>();
         StartCoroutine(update_cr());
 
@@ -41,28 +44,32 @@ public class CustomCamera : MonoBehaviour
             if(!multiplayer)
             {
                 Vector3 pos = Vector3.Lerp(this.transform.position, playerOne.position, lerpSpeed);
-                pos.z = -3;
+                pos.z = -3.0f;
+                
                 this.transform.position = pos;
             }
             else
             {
                 Vector3 pos = playerOne.position;
-                pos += (playerTwo.position - playerOne.position) / 2;
-                float multiplier = Vector3.Distance(playerOne.position, playerTwo.position) / 21;
-                pos.z = -3;
-                if (multiplier > 1) { _camera.orthographicSize = 9.42f * Mathf.Abs(multiplier); }
-                this.transform.position = pos;
+                pos += (playerTwo.position - playerOne.position) / 2.0f;
+                float multiplier = Vector3.Distance(playerOne.position, playerTwo.position) / 21.0f;
+                pos.z = -3.0f;
+                if (multiplier > 1.0f) { _camera.orthographicSize = 9.42f * Mathf.Abs(multiplier); }
+                this.transform.position = origin = pos;
             }
+
+            
             yield return null;
         }
     }
 
-    public void CameraShake(float force = 0.75f)
+    public void CameraShake(float force = 0.3f)
     {
         axis = Vector3.one;
         axis.z = 0;
-        duration = 10;
+        duration = 0.5f;
         this.force = force;
+        axis *= force;
 
         StartCoroutine(cameraShake_cr());
     }
@@ -72,9 +79,10 @@ public class CustomCamera : MonoBehaviour
         this.force = force;
         this.axis = axis;
         this.axis.z = 0;
-        duration = 1;
+        duration = 0.5f;
+        axis *= force;
 
-        StartCoroutine(cameraShake_cr());
+         StartCoroutine(cameraShake_cr());
     }
 
     public void CameraShake(Vector3 axis, float force, float duration)
@@ -83,6 +91,7 @@ public class CustomCamera : MonoBehaviour
         this.axis = axis;
         this.axis.z = 0;
         this.duration = duration;
+        axis *= force;
 
         StartCoroutine(cameraShake_cr());
     }
@@ -92,16 +101,15 @@ public class CustomCamera : MonoBehaviour
         if (!shaking)
         {
             shaking = true;
-            Vector3 origin = this.transform.position;
-            Vector3 pos = Vector3.zero;
-            while (duration > 0)
+            Vector3 offset = Vector3.zero;
+            while (duration > 0.0f)
             {
-                if (lerping) { force /= 2; }
-                axis *= force;
-                pos.x = Random.Range(-axis.x, axis.x);
-                pos.y = Random.Range(-axis.y, axis.y);
+                origin = this.transform.position;
 
-                this.transform.position = origin + pos;
+                offset.x = Random.Range(-axis.x, axis.x);
+                offset.y = Random.Range(-axis.y, axis.y);
+
+                this.transform.position += offset;
 
                 duration -= Time.deltaTime;
                 yield return null;
@@ -120,7 +128,6 @@ public class CustomCamera : MonoBehaviour
     private IEnumerator playerFocus_cr()
     {
         Vector3 origin = this.transform.position;
-        lerping = true;
         while(duration > 0)
         {
             this.transform.position = Vector3.Lerp(origin, ObjectSingleton.Instance.playerList[playerIndex].transform.position, movement);
@@ -128,7 +135,6 @@ public class CustomCamera : MonoBehaviour
             duration -= Time.deltaTime;
             yield return null;
         }
-        lerping = false;
     }
 
     void OnReceiveShootEvent(EventData data)
