@@ -7,6 +7,16 @@ public class DamageEventData : EventData
     public Vector3 m_Position;
 }
 
+public class PlayerDeathEventData : EventData
+{
+    public BasePlayer m_Player;
+}
+
+public class PlayerRespawnEventData : EventData
+{
+    public BasePlayer m_Player;
+}
+
 public class BasePlayer : MonoBehaviour
 {
     public float MaxHealth = 100;
@@ -22,11 +32,28 @@ public class BasePlayer : MonoBehaviour
 
     Animator animator;
     DamageEventData m_DamageEventData;
+    PlayerDeathEventData m_DeathEventData;
+    PlayerRespawnEventData m_RespawnEventData;
 
     protected virtual void Init(int player, float StartingFuel)
     {
         playerNum = player;
         FuelAmount = StartingFuel;
+    }
+
+    void OnEnable()
+    {
+        Reset();
+    }
+
+    void Reset()
+    {
+        Health = MaxHealth;
+
+        if (m_RespawnEventData != null)
+        {
+            EventManager.Instance.SendEvent(m_RespawnEventData);
+        }
     }
 
     protected virtual void Start()
@@ -37,6 +64,12 @@ public class BasePlayer : MonoBehaviour
         ObjectSingleton.Instance.playerList.Add(this.gameObject);
 
         m_DamageEventData = new DamageEventData();
+
+        m_DeathEventData = new PlayerDeathEventData();
+        m_DeathEventData.m_Player = this;
+
+        m_RespawnEventData = new PlayerRespawnEventData();
+        m_RespawnEventData.m_Player = this;
     }
 
     protected virtual void Update()
@@ -141,7 +174,6 @@ public class BasePlayer : MonoBehaviour
         if(Defense < 50.0f)
         {
             Defense += value;
-
         }
 
         if (Defense > 50.0f)
@@ -151,10 +183,8 @@ public class BasePlayer : MonoBehaviour
     {
         if (takesDamage == true)
         {
-
             if(value > 0)
             {
-
                 m_DamageEventData.m_Position = transform.position;
 
                 EventManager.Instance.SendEvent(m_DamageEventData);
@@ -162,12 +192,10 @@ public class BasePlayer : MonoBehaviour
 
             if(Defense >= value)
             {
-
                 Defense -= value;
             }
             else
             {
-
                 value -= Defense;
                 Defense = 0;
                 Health -= value;
@@ -175,6 +203,8 @@ public class BasePlayer : MonoBehaviour
 
             if (Health <= 0.0f)
             {
+                Health = 0.0f;
+
                 Death();
             }
         }
@@ -182,7 +212,7 @@ public class BasePlayer : MonoBehaviour
 
     protected void Death()
     {
-        //play death anim here
+        EventManager.Instance.SendEvent(m_DeathEventData);
     }
 
     public void Destroy()

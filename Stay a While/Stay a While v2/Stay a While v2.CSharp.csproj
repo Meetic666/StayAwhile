@@ -86,6 +86,7 @@
     <Compile Include="Assets\Scripts\Player\ExplosiveProjectile.cs" />
     <Compile Include="Assets\Scripts\Player\Katana.cs" />
     <Compile Include="Assets\Scripts\Player\ObjectSingleton.cs" />
+    <Compile Include="Assets\Scripts\Player\PlayerDeathManager.cs" />
     <Compile Include="Assets\Scripts\Splash\PressAnyKey.cs" />
     <Compile Include="Assets\Scripts\Static\ConstantsAndVariables.cs" />
     <Compile Include="Assets\Scripts\TriggerSystem\AddWeapons\AddBasicWeapon.cs" />
@@ -111,10 +112,12 @@
     <Compile Include="Assets\Scripts\TriggerSystem\Environment\TriggerableLight.cs" />
     <Compile Include="Assets\Scripts\TriggerSystem\Environment\WaitForObjectActivation.cs" />
     <Compile Include="Assets\Scripts\TriggerSystem\Triggerable.cs" />
+    <Compile Include="Assets\Scripts\UI\HealthBar.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Shaders\DarknessShader.shader" />
     <None Include="Assets\Shaders\FlashShader.shader" />
+    <None Include="Assets\Shaders\HealthBar.shader" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />
 </Project>
