@@ -5,9 +5,6 @@ public class FireAnimation : MonoBehaviour
 {
     public CircleDetector2D m_FireCircle;
 
-    public AudioClip m_BurningClip;
-    public AudioClip m_DeadClip;
-
     Animator m_Animator;
 
     string m_Alive;
@@ -43,8 +40,13 @@ public class FireAnimation : MonoBehaviour
 
     void SwitchSoundState()
     {
-        m_AudioSource.clip = !m_PreviousAlive ? m_BurningClip : m_DeadClip;
-
-        m_AudioSource.Play();
+        if(!m_PreviousAlive)
+        {
+            m_AudioSource.Play();
+        }
+        else
+        {
+            m_AudioSource.Stop();
+        }
     }
 }
