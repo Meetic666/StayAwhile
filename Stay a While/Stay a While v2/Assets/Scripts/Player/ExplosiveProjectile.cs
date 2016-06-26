@@ -10,9 +10,11 @@ public class ExplosiveProjectile : BaseProjectile
     float defaultTimeToDetonate;
     public float SlowSpeed = 0.3f;
     float defaultSpeed = 0.0f;
+    Animator animator;
 
     void Start()
     {
+        animator = GetComponent<Animator>();
         defaultSpeed = projectileSpeed;
         defaultTimeToDetonate = TimeToDetonate;
     }
@@ -47,6 +49,7 @@ public class ExplosiveProjectile : BaseProjectile
             RaycastHit2D hit = Physics2D.CircleCast(gameObject.transform.position, Radius, transform.up, 0.1f, maskToHit);
             if (hit == true || TimeToDetonate < 0.0f)
             {
+                animator.SetTrigger("Death");
                 Vector2 point = Vector2.zero;
                 if (hit == true)
                     point = hit.point;
@@ -64,12 +67,14 @@ public class ExplosiveProjectile : BaseProjectile
                     if (colls[i].GetComponent<BasePlayer>() != null)
                         colls[i].GetComponent<BasePlayer>().Damage(Damage);
                 }
-
-
-                gameObject.transform.position = new Vector3(float.MaxValue, float.MaxValue);
-                gameObject.SetActive(false);
+                
             }
         }
     }
 
+    private void Death()
+    {
+        gameObject.transform.position = new Vector3(float.MaxValue, float.MaxValue);
+        gameObject.SetActive(false);
+    }
 }
