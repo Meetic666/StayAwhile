@@ -57,11 +57,8 @@ public class ExplosiveProjectile : BaseProjectile
             {
                 if (TimeToDetonate < 0.0f)
                 {
-                    if(animator)
-                    {
-                        animator.SetTrigger("Death");
-                    }
-
+                    if (animator != null) { animator.SetTrigger("Death"); }
+                    this.transform.rotation = Quaternion.identity;
                     RaycastHit2D hit = Physics2D.CircleCast(gameObject.transform.position, Radius, transform.up, 0.1f, maskToHit);
                     if (hit == true)
                     {
