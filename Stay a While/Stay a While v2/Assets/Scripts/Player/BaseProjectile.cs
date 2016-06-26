@@ -3,6 +3,7 @@ using System.Collections;
 
 public class BaseProjectile : MonoBehaviour 
 {
+    public float lifeTime = 5;
     public float DamageToDeal = 15.0f;
     protected float Radius = 0.3f;
     public float projectileSpeed = 0.5f;
@@ -31,7 +32,8 @@ public class BaseProjectile : MonoBehaviour
                 gameObject.SetActive(false);
             }
         }
-        
+        lifeTime -= Time.deltaTime;
+        if (lifeTime <= 0) { Destroy(this.gameObject); }
     }
 
 }
