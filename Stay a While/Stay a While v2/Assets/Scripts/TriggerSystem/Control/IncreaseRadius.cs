@@ -3,7 +3,7 @@ using System.Collections;
 
 public class IncreaseRadius : Triggerable {
 
-    float Factor = 10.0f;
+    public float StartFactor = 50.0f;
     public float MaxFactor = 10.0f;
 
     public float m_FactorDecreaseRate = 0.03f;
@@ -27,15 +27,15 @@ public class IncreaseRadius : Triggerable {
 
         for(int i = 0; i < detectors.Length; i++)
         {
-            detectors[i].CircleRadius = (detectorDefaults[i] * (i + 1)) * Factor > MaxFactor ? MaxFactor : (detectorDefaults[i] * (i + 1)) * Factor;
-            if(Factor > 0.0f)
-                Factor -= m_FactorDecreaseRate * Time.deltaTime;
+            detectors[i].CircleRadius = (detectorDefaults[i] * (i + 1)) * StartFactor > MaxFactor ? MaxFactor : (detectorDefaults[i] * (i + 1)) * StartFactor;
+            if(StartFactor > 0.0f)
+                StartFactor -= m_FactorDecreaseRate * Time.deltaTime;
         }
     }
 
     public void AddToFactor(float increase)
     {
-        Factor += increase;
+        StartFactor += increase;
     }
 
 }
