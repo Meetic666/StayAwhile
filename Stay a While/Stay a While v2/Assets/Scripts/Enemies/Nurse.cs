@@ -18,15 +18,23 @@ public class Nurse : BaseEnemy
 
     private void Attack()
     {
-        if (Vector3.Distance(ObjectSingleton.Instance.playerList[0].transform.position, this.transform.position) <= attackRange / 2)
+        GameObject player = ObjectSingleton.Instance.playerList[0];
+        if (Vector3.Distance(player.transform.position, this.transform.position) <= attackRange / 2)
         {
-            ObjectSingleton.Instance.playerList[0].GetComponent<BasePlayer>().Damage(attackDamage);
+            if(player.activeSelf)
+            {
+                ObjectSingleton.Instance.playerList[0].GetComponent<BasePlayer>().Damage(attackDamage);
+            }
         }
         if(ObjectSingleton.Instance.playerList.Count > 1)
         {
-            if (Vector3.Distance(ObjectSingleton.Instance.playerList[1].transform.position, this.transform.position) <= attackRange / 2)
+            player = ObjectSingleton.Instance.playerList[1];
+            if (Vector3.Distance(player.transform.position, this.transform.position) <= attackRange / 2)
             {
-                ObjectSingleton.Instance.playerList[1].GetComponent<BasePlayer>().Damage(attackDamage);
+                if (player.activeSelf)
+                {
+                    ObjectSingleton.Instance.playerList[1].GetComponent<BasePlayer>().Damage(attackDamage);
+                }
             }
         }
     }

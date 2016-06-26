@@ -38,11 +38,15 @@ public class Octopus : BaseEnemy
         {
             this.transform.position += this.transform.up * chargeSpeed * Time.deltaTime;
 
-            if(!pOneDmg)
+            GameObject player = ObjectSingleton.Instance.playerList[0];
+            if (!pOneDmg)
             {
-                if (Vector3.Distance(ObjectSingleton.Instance.playerList[0].transform.position, this.transform.position) <= 1)
+                if (Vector3.Distance(player.transform.position, this.transform.position) <= 1)
                 {
-                    ObjectSingleton.Instance.playerList[0].GetComponent<BasePlayer>().Damage(attackDamage);
+                    if(player.activeSelf)
+                    {
+                        ObjectSingleton.Instance.playerList[0].GetComponent<BasePlayer>().Damage(attackDamage);
+                    }
                     pOneDmg = true;
                 }
             }
@@ -51,9 +55,13 @@ public class Octopus : BaseEnemy
             {
                 if (ObjectSingleton.Instance.playerList.Count > 1)
                 {
-                    if (Vector3.Distance(ObjectSingleton.Instance.playerList[1].transform.position, this.transform.position) <= 1)
+                    player = ObjectSingleton.Instance.playerList[1];
+                    if (Vector3.Distance(player.transform.position, this.transform.position) <= 1)
                     {
-                        ObjectSingleton.Instance.playerList[1].GetComponent<BasePlayer>().Damage(attackDamage);
+                        if(player.activeSelf)
+                        {
+                            ObjectSingleton.Instance.playerList[1].GetComponent<BasePlayer>().Damage(attackDamage);
+                        }
                         pTwoDmg = true;
                     }
                 }

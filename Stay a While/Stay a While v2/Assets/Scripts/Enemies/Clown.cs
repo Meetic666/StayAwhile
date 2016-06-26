@@ -10,9 +10,13 @@ public class Clown : BaseEnemy
     {
         animator.SetTrigger("StateChange");
 
-        if(Vector3.Distance(ObjectSingleton.Instance.playerList[targetIndex].transform.position, this.transform.position) <= attackRange)
+        GameObject player = ObjectSingleton.Instance.playerList[targetIndex];
+        if (Vector3.Distance(player.transform.position, this.transform.position) <= attackRange)
         {
-            ObjectSingleton.Instance.playerList[targetIndex].GetComponent<BasePlayer>().Damage(attackDamage);
+            if(player.activeSelf)
+            {
+                ObjectSingleton.Instance.playerList[targetIndex].GetComponent<BasePlayer>().Damage(attackDamage);
+            }
         }
         
         yield return new WaitForSeconds(attackSpeed);
