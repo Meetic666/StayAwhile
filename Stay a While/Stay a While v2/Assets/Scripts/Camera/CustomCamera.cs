@@ -98,7 +98,7 @@ public class CustomCamera : MonoBehaviour
 
     private IEnumerator cameraShake_cr()
     {
-        if (!shaking)
+        //if (!shaking)
         {
             shaking = true;
             Vector3 offset = Vector3.zero;

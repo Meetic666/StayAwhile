@@ -33,13 +33,13 @@ public class Drop_Spawner : MonoBehaviour
         spawnType = (Type)Random.Range(0, 8);
         switch (spawnType)
         {
-            case Type.Pistol: prefab.GetComponent<AddBasicWeapon>().weapon = BasicWeapon.Pistol; break;
+            //case Type.Pistol: prefab.GetComponent<AddBasicWeapon>().weapon = BasicWeapon.Pistol; break;
             case Type.SMG: prefab.GetComponent<AddBasicWeapon>().weapon = BasicWeapon.SMG; break;
             case Type.AssaultRifle: prefab.GetComponent<AddBasicWeapon>().weapon = BasicWeapon.AssaultRifle; break;
             case Type.CrossBow: prefab.GetComponent<AddBasicWeapon>().weapon = BasicWeapon.Crossbow; break;
             case Type.MissileLauncher: prefab.GetComponent<AddBasicWeapon>().weapon = BasicWeapon.MissileLauncher; break;
             case Type.Gernades: prefab.GetComponent<AddBasicWeapon>().weapon = BasicWeapon.Grenades; break;
-            case Type.AirStrike: prefab.GetComponent<AddBasicWeapon>().weapon = BasicWeapon.Airstrike; break;
+            //case Type.AirStrike: prefab.GetComponent<AddBasicWeapon>().weapon = BasicWeapon.Airstrike; break;
             //case Type.Katana: prefab.GetComponent<AddBasicWeapon>().weapon = BasicWeapon.Katana; break;
             default: break;
         }
@@ -86,13 +86,13 @@ public class Drop_Spawner : MonoBehaviour
                 spawnType = (Type)Random.Range(0, 8);
                 switch (spawnType)
                 {
-                    case Type.Pistol: box.GetComponent<AddBasicWeapon>().weapon = BasicWeapon.Pistol; break;
+                    //case Type.Pistol: box.GetComponent<AddBasicWeapon>().weapon = BasicWeapon.Pistol; break;
                     case Type.SMG: box.GetComponent<AddBasicWeapon>().weapon = BasicWeapon.SMG; break;
                     case Type.AssaultRifle: box.GetComponent<AddBasicWeapon>().weapon = BasicWeapon.AssaultRifle; break;
                     case Type.CrossBow: box.GetComponent<AddBasicWeapon>().weapon = BasicWeapon.Crossbow; break;
                     case Type.MissileLauncher: box.GetComponent<AddBasicWeapon>().weapon = BasicWeapon.MissileLauncher; break;
                     case Type.Gernades: box.GetComponent<AddBasicWeapon>().weapon = BasicWeapon.Grenades; break;
-                    case Type.AirStrike: box.GetComponent<AddBasicWeapon>().weapon = BasicWeapon.Airstrike; break;
+                    //case Type.AirStrike: box.GetComponent<AddBasicWeapon>().weapon = BasicWeapon.Airstrike; break;
                     //case Type.Katana: box.GetComponent<AddBasicWeapon>().weapon = BasicWeapon.Katana; break;
                     default: break;
                 }

@@ -33,6 +33,11 @@ public class BaseEnemy : MonoBehaviour
     protected Animator animator;
     protected List<GameObject> obstacles;
 
+    [SerializeField]
+    protected Sprite[] bloodSprites;
+    [SerializeField]
+    protected GameObject bloodPrefab;
+
     ShootEventData m_ShootEventData;
 
     void Awake()
@@ -139,6 +144,7 @@ public class BaseEnemy : MonoBehaviour
 
     public virtual void DealDamage(float dmg)
     {
+        Debug.Log("DEAL DAMAGE");
         health -= dmg;
         if(health <= 0)
         {

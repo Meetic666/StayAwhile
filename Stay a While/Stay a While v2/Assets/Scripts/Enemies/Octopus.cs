@@ -85,6 +85,9 @@ public class Octopus : BaseEnemy
         //Spawn fuel
         Instantiate(Fuel, this.transform.position, Quaternion.identity);
 
+        GameObject fab = (GameObject)Instantiate(bloodPrefab, this.transform.position, this.transform.rotation);
+        fab.GetComponent<SpriteRenderer>().sprite = bloodSprites[Random.Range(0, bloodSprites.Length)];
+
         StopAllCoroutines();
         this.gameObject.SetActive(false);
 
