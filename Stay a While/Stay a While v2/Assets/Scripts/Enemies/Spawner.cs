@@ -10,6 +10,10 @@ public class Spawner : MonoBehaviour
     private GameObject Clown;
     [SerializeField]
     private GameObject FootBallPlayer;
+    [SerializeField]
+    private GameObject Octopus;
+    [SerializeField]
+    private GameObject Nurse;
         
     [Space(10)]
     public Type spawnType;
@@ -17,6 +21,8 @@ public class Spawner : MonoBehaviour
     {
         Clown = 0,
         Tommy,
+        Octopus,
+        Nurse,
         None
     }
 
@@ -34,6 +40,8 @@ public class Spawner : MonoBehaviour
         {
             case Type.Clown: prefab = Clown; break;
             case Type.Tommy: prefab = FootBallPlayer; break;
+            case Type.Octopus: prefab = Octopus; break;
+            case Type.Nurse: prefab = Nurse; break;
             default: prefab = Clown; break;
         }
         ObjectPool.Instance.RegisterPrefab(prefab, 5);
@@ -111,6 +119,8 @@ public class Spawner : MonoBehaviour
         {
             case Type.Clown: prefab = Clown; break;
             case Type.Tommy: prefab = FootBallPlayer; break;
+            case Type.Octopus: prefab = Octopus; break;
+            case Type.Nurse: prefab = Nurse; break;
             default: break;
         }
     }

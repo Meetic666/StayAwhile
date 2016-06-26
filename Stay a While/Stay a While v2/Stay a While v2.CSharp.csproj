@@ -66,6 +66,8 @@
     <Compile Include="Assets\Scripts\Camera\CustomCamera.cs" />
     <Compile Include="Assets\Scripts\Enemies\BaseEnemy.cs" />
     <Compile Include="Assets\Scripts\Enemies\Clown.cs" />
+    <Compile Include="Assets\Scripts\Enemies\Nurse.cs" />
+    <Compile Include="Assets\Scripts\Enemies\Octopus.cs" />
     <Compile Include="Assets\Scripts\Enemies\Spawner.cs" />
     <Compile Include="Assets\Scripts\Enemies\TommyWiseau.cs" />
     <Compile Include="Assets\Scripts\EventManagement\EventData.cs" />

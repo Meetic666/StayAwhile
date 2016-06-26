@@ -130,7 +130,7 @@ public class BaseEnemy : MonoBehaviour
         }
     }
 
-    protected void OnTriggerEnter2D (Collider2D other)
+    protected virtual void OnTriggerEnter2D (Collider2D other)
     {
         if (other.tag == "Obstacle")
         {
@@ -138,7 +138,7 @@ public class BaseEnemy : MonoBehaviour
         }
     }
 
-    protected void OnTriggerExit2D (Collider2D other)
+    protected virtual void OnTriggerExit2D (Collider2D other)
     {
         if (other.tag == "Obstacle")
         {
