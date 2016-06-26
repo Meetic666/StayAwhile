@@ -44,7 +44,7 @@ public class CustomCamera : MonoBehaviour
             if(!multiplayer)
             {
                 Vector3 pos = Vector3.Lerp(this.transform.position, playerOne.position, lerpSpeed);
-                pos.z = -3.0f;
+                pos.z = -10.0f;
                 
                 this.transform.position = pos;
             }
@@ -53,7 +53,7 @@ public class CustomCamera : MonoBehaviour
                 Vector3 pos = playerOne.position;
                 pos += (playerTwo.position - playerOne.position) / 2.0f;
                 float multiplier = Vector3.Distance(playerOne.position, playerTwo.position) / 21.0f;
-                pos.z = -3.0f;
+                pos.z = -10.0f;
                 if (multiplier > 1.0f) { _camera.orthographicSize = 9.42f * Mathf.Abs(multiplier); }
                 this.transform.position = origin = pos;
             }

@@ -151,16 +151,23 @@ public class BasePlayer : MonoBehaviour
     {
         if (takesDamage == true)
         {
-            m_DamageEventData.m_Position = transform.position;
 
-            EventManager.Instance.SendEvent(m_DamageEventData);
+            if(value > 0)
+            {
+
+                m_DamageEventData.m_Position = transform.position;
+
+                EventManager.Instance.SendEvent(m_DamageEventData);
+            }
 
             if(Defense >= value)
             {
+
                 Defense -= value;
             }
             else
             {
+
                 value -= Defense;
                 Defense = 0;
                 Health -= value;

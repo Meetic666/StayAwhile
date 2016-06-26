@@ -44,8 +44,8 @@ public class Spawner : MonoBehaviour
             case Type.Nurse: prefab = Nurse; break;
             default: prefab = Clown; break;
         }
-        ObjectPool.Instance.RegisterPrefab(prefab, 5);
-        StartCoroutine(test_cr());
+        ObjectPool.Instance.RegisterPrefab(prefab, 20);
+        SpawnWave(1, 3.0f, true);
     }
 
     private IEnumerator test_cr()
@@ -108,8 +108,7 @@ public class Spawner : MonoBehaviour
             }
             
             if (endlessSpawn) { i--; }
-            if (i > 0) { yield return new WaitForSeconds(spawnDelay); }
-            else { yield return null; }
+            yield return new WaitForSeconds(spawnDelay);
         }
     }
 
