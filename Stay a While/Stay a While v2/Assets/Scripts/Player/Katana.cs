@@ -23,6 +23,8 @@ public class Katana : BaseWeapon
     {
         base.Start();
         FireRate = 0.2f;
+
+        WeaponName = "Katana";
     }
 
     public override void Fire()

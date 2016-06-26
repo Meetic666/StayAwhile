@@ -3,6 +3,7 @@ using System.Collections;
 
 public class ShootEventData : EventData
 {
+    public string m_WeaponName;
     public Vector3 m_ShotPosition;
 }
 
@@ -63,6 +64,8 @@ public class BaseWeapon : MonoBehaviour
         ammoCount = defAmmoCount;
 
         m_ShootEventData = new ShootEventData();
+
+        m_ShootEventData.m_WeaponName = WeaponName;
     }
     protected virtual void Update()
     {

@@ -8,6 +8,8 @@ public class BaseEnemy : MonoBehaviour
     protected GameObject Fuel;
 
     [SerializeField]
+    protected string m_EnemyName;
+    [SerializeField]
     protected float speed;
     [SerializeField]
     protected float attackRange;
@@ -31,6 +33,8 @@ public class BaseEnemy : MonoBehaviour
     protected Animator animator;
     protected List<GameObject> obstacles;
 
+    ShootEventData m_ShootEventData;
+
     void Start()
     {
         obstacles = new List<GameObject>();
@@ -38,6 +42,9 @@ public class BaseEnemy : MonoBehaviour
         healthMAX = health;
         currentState = State.Spawned;
         StartCoroutine(update_cr());
+
+        m_ShootEventData = new ShootEventData();
+        m_ShootEventData.m_WeaponName = m_EnemyName; 
     }
 
     protected virtual IEnumerator update_cr()
@@ -74,7 +81,10 @@ public class BaseEnemy : MonoBehaviour
         switch(next)
         {
             case State.Moving: currentState = State.Moving; break;
-            case State.Attacking: currentState = State.Attacking; break;
+            case State.Attacking:
+                currentState = State.Attacking;
+                EventManager.Instance.SendEvent(m_ShootEventData);
+                break;
             case State.Dead: currentState = State.Dead; break;
             case State.Spawned: currentState = State.Spawned; break;
             default: currentState = State.None; break;

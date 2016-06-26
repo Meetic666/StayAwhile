@@ -63,6 +63,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\AudioManagement\SFXManager.cs" />
     <Compile Include="Assets\Scripts\Camera\CustomCamera.cs" />
     <Compile Include="Assets\Scripts\Enemies\BaseEnemy.cs" />
     <Compile Include="Assets\Scripts\Enemies\Clown.cs" />
