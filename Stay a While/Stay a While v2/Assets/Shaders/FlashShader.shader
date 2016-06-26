@@ -3,6 +3,14 @@
 	Properties
 	{
 		_MainTex ("Texture", 2D) = "white" {}
+
+		m_Masks("Mask", 2D) = "white" {}
+		m_LightEnabled ("Enabled", int) = 1.0
+		m_LightRanges("Range", float) = 10.0
+
+		m_MaskUVSize("Flash size", Range(0.0, 1.0)) = 0.1
+
+		m_FlashIntensity("Flash Intensity", Range(0.0, 5.0)) = 2.0
 	}
 	SubShader
 	{
@@ -21,6 +29,12 @@
 			float3 m_LightPositions;
 			float m_LightRanges;
 			int m_LightEnabled;
+
+			fixed m_LightPositionX;
+			fixed m_LightPositionY;
+
+			fixed m_MaskUVSize;
+			float m_FlashIntensity;
 
 			struct appdata
 			{
@@ -54,22 +68,33 @@
 
 				if (m_LightEnabled != 0)
 				{
-					float2 maskUv = float2(i.uv.x, 1.0 - i.uv.y);
+					float2 maskUv = float2(i.uv.x, i.uv.y);
 
-					float lightDistance = distance(i.m_WorldPosition.xyz, m_LightPositions);
+					float2 distanceUv = float2(maskUv)-m_LightPositions;
+					distanceUv.y *= _ScreenParams.y / _ScreenParams.x;
 
-					fixed4 maskAmount = tex2D(m_Masks, maskUv);
+					if (abs(distanceUv.x) <= m_MaskUVSize
+						&& abs(distanceUv.y) <= m_MaskUVSize)
+					{
+						maskUv = ((distanceUv / m_MaskUVSize) + float2(1.0, 1.0)) / 2.0;
 
-					fixed4 maskThreshold = fixed4(1.0, 1.0, 1.0, 1.0) * (1.0 - (lightDistance / m_LightRanges));
+						float lightDistance = distance(i.m_WorldPosition.xyz, m_LightPositions);
 
-					maskThreshold = clamp(maskThreshold, 0.0, 1.0);
+						fixed4 maskAmount = tex2D(m_Masks, maskUv);
 
-					maskAmount = maskAmount - maskThreshold;
+						fixed4 maskThreshold = fixed4(1.0, 1.0, 1.0, 1.0) * (1.0 - (length(distanceUv) / m_LightRanges));
 
-					lightMask += maskAmount * 10;
+						maskThreshold = clamp(maskThreshold, 0.0, 1.0);
+
+						maskAmount = maskAmount - maskThreshold;
+
+						maskAmount = clamp(maskAmount, 0.0, 1.0);
+
+						lightMask += maskAmount * m_FlashIntensity;
+					}
 				}
 
-				return col * lightMask;
+				return col + lightMask;
 			}
 			ENDCG
 		}

@@ -5,22 +5,34 @@ public class DarknessManager : MonoBehaviour
 {
     public Material m_DarknessMaterial;
 
-    public Vector3[] m_LightPositions = new Vector3[10];
-    public int[] m_LightEnabled = new int[10];
-    public float[] m_LightRanges = new float[10];
-    public Texture[] m_Masks = new Texture[10];
+    public CircleDetector2D m_FireCircle;
+    public float m_MaxRadius = 10.0f;
+
+    public Texture[] m_Masks;
+
+    public int m_MaskAnimationFPS = 1;
+
+    int m_CurrentMaskFrame = 0;
 
     void OnRenderImage(RenderTexture source, RenderTexture destination)
     {
-        int loopSize = Mathf.Min(10, m_LightEnabled.Length);
+        Vector3 radiusVector = Camera.main.transform.position + Vector3.left * m_FireCircle.CircleRadius;
+        radiusVector = Camera.main.WorldToViewportPoint(radiusVector) - Camera.main.WorldToViewportPoint(Camera.main.transform.position);
 
-        for(int i = 0; i < loopSize; i++)
-        {
-            m_DarknessMaterial.SetVector("m_LightPositions", m_LightPositions[i]);
-            m_DarknessMaterial.SetInt("m_LightEnabled", m_LightEnabled[i]);
-            m_DarknessMaterial.SetFloat("m_LightRanges", m_LightRanges[i]);
-            m_DarknessMaterial.SetTexture("m_Masks", m_Masks[i]);
-        }
+        radiusVector.z = 0.0f;
+
+        Vector3 maxRadiusVector = Camera.main.transform.position + Vector3.left * m_MaxRadius;
+        maxRadiusVector = Camera.main.WorldToViewportPoint(maxRadiusVector) - Camera.main.WorldToViewportPoint(Camera.main.transform.position);
+
+        maxRadiusVector.z = 0.0f;
+
+        Vector3 lightPositionInViewport = Camera.main.WorldToViewportPoint(m_FireCircle.transform.position);
+
+        m_DarknessMaterial.SetVector("m_LightPositions", lightPositionInViewport);
+        m_DarknessMaterial.SetFloat("m_LightRanges", radiusVector.magnitude);
+        m_DarknessMaterial.SetFloat("m_MaskUVSize", maxRadiusVector.magnitude);
+        m_DarknessMaterial.SetTexture("m_Masks", m_Masks[m_CurrentMaskFrame]);
+        m_DarknessMaterial.SetFloat("m_MaskThreshold", (1.0f - m_FireCircle.CircleRadius / m_MaxRadius));
 
         Graphics.Blit(source, destination, m_DarknessMaterial);
     }

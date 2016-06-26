@@ -3,6 +3,15 @@
 	Properties
 	{
 		_MainTex ("Texture", 2D) = "white" {}
+
+		m_FireColor ("Fire color", Color) = (1.0, 1.0, 1.0, 1.0)
+		m_FireIntensity ("Fire intensity", float) = 1.0
+
+		m_MaskThreshold ("Mask threshold", Range(0.0, 1.0)) = 0.0
+
+		m_MaskUVSize ("Mask UV size", float) = 1.0
+
+		m_AmbientLight ("Ambient Light", Color) = (0.1, 0.1, 0.1, 1.0)
 	}
 		SubShader
 	{
@@ -21,6 +30,11 @@
 			float3 m_LightPositions;
 			float m_LightRanges;
 			int m_LightEnabled;
+			float4 m_FireColor;
+			float m_FireIntensity;
+			fixed m_MaskThreshold;
+			fixed m_MaskUVSize;
+			fixed4 m_AmbientLight;
 
 			struct appdata
 			{
@@ -32,13 +46,11 @@
 			{
 				float2 uv : TEXCOORD0;
 				float4 vertex : SV_POSITION;
-				float4 m_WorldPosition : TEXCOORD1;
 			};
 
 			v2f vert (appdata v)
 			{
 				v2f o;
-				o.m_WorldPosition = v.vertex;
 				o.vertex = mul(UNITY_MATRIX_MVP, v.vertex);
 				o.uv = v.uv;
 				return o;
@@ -50,25 +62,28 @@
 			{
 				fixed4 col = tex2D(_MainTex, i.uv);
 
-				fixed4 lightMask = fixed4(0.0, 0.0, 0.0, 0.0);
+				fixed4 lightMask = m_AmbientLight;
 
-				for (int j = 0; j < 10; j++)
+				//for (int j = 0; j < 10; j++)
 				{
-					if (m_LightEnabled != 0)
+					float2 maskUv = float2(i.uv.x, 1.0 - i.uv.y);
+
+					float2 distanceUv = float2(maskUv) - m_LightPositions;
+					distanceUv.y *= _ScreenParams.y / _ScreenParams.x;
+
+					if (abs(distanceUv.x) <= m_MaskUVSize
+						&& abs(distanceUv.y) <= m_MaskUVSize)
 					{
-						float2 maskUv = float2(i.uv.x, 1.0 - i.uv.y);
+						maskUv = ((distanceUv / m_MaskUVSize) + float2(1.0, 1.0)) / 2.0;
 
-						float lightDistance = distance(i.m_WorldPosition.xyz, m_LightPositions);
+						float maskAmount = tex2D(m_Masks, maskUv).x;
 
-						fixed4 maskAmount = tex2D(m_Masks, maskUv);
+						if (maskAmount >= m_MaskThreshold)
+						{
+							maskAmount -= m_MaskThreshold;
 
-						fixed4 maskThreshold = fixed4(1.0, 1.0, 1.0, 1.0) * (1.0 - (lightDistance / m_LightRanges));
-						
-						maskThreshold = clamp(maskThreshold, 0.0, 1.0);
-
-						maskAmount = maskAmount - maskThreshold;
-
-						lightMask += maskAmount;
+							lightMask += maskAmount * m_FireColor * m_FireIntensity;
+						}
 					}
 				}
 

@@ -1,6 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+public class ShootEventData : EventData
+{
+    public Vector3 m_ShotPosition;
+}
+
 public class BaseWeapon : MonoBehaviour 
 {
     public int clipCount = 0;
@@ -17,6 +22,8 @@ public class BaseWeapon : MonoBehaviour
     AnimationClip idleAnimClip;
     public string WeaponName = "Base";
     protected Animation anim;
+
+    protected ShootEventData m_ShootEventData;
 
     public virtual void Init(int ClipCount, int DefAmmoCount, int MaxAmmo, float newFireRate, float newWeaponSpread, string newWeaponName)
     {
@@ -54,6 +61,8 @@ public class BaseWeapon : MonoBehaviour
 
         GetComponent<BasePlayer>().Weapons.Add(this);
         ammoCount = defAmmoCount;
+
+        m_ShootEventData = new ShootEventData();
     }
     protected virtual void Update()
     {
@@ -81,11 +90,16 @@ public class BaseWeapon : MonoBehaviour
         {
             if (clipCount > 0)
             {
-                ObjectPool.Instance.Instantiate(bulletPrefab, gameObject.transform.position + transform.up * 0.3f, Quaternion.Euler(0.0f,0.0f,transform.eulerAngles.z/2.0f + Random.Range(-WeaponSpread,WeaponSpread)));
+                Vector3 shotPosition = gameObject.transform.position + transform.up * 0.3f;
+
+                GameObject newProjectile = ObjectPool.Instance.Instantiate(bulletPrefab, shotPosition, Quaternion.Euler(0.0f,0.0f,transform.eulerAngles.z/2.0f + Random.Range(-WeaponSpread,WeaponSpread)));
+
                 FireCD = FireRate;
                 clipCount--;
 
-                //TODO: Fire event
+                m_ShootEventData.m_ShotPosition = shotPosition;
+
+                EventManager.Instance.SendEvent(m_ShootEventData);
             }
             else
             {

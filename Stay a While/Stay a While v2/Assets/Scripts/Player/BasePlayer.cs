@@ -1,6 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+
+public class DamageEventData : EventData
+{
+    public Vector3 m_Position;
+}
+
 public class BasePlayer : MonoBehaviour
 {
     public float MaxHealth = 100;
@@ -14,6 +20,8 @@ public class BasePlayer : MonoBehaviour
     public float FuelAmount = 0;
     public float Defense = 0;
 
+    DamageEventData m_DamageEventData;
+
     protected virtual void Init(int player, float StartingFuel)
     {
         playerNum = player;
@@ -25,6 +33,8 @@ public class BasePlayer : MonoBehaviour
         Health = MaxHealth;
         MoveSpeed = DefMoveSpeed;
         ObjectSingleton.Instance.playerList.Add(this.gameObject);
+
+        m_DamageEventData = new DamageEventData();
     }
 
     protected virtual void Update()
@@ -137,6 +147,9 @@ public class BasePlayer : MonoBehaviour
     {
         if (takesDamage == true)
         {
+            m_DamageEventData.m_Position = transform.position;
+
+            EventManager.Instance.SendEvent(m_DamageEventData);
 
             if(Defense >= value)
             {

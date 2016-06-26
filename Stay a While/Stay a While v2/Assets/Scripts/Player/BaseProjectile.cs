@@ -9,6 +9,14 @@ public class BaseProjectile : MonoBehaviour
     public float projectileSpeed = 0.5f;
     public LayerMask maskToHit = 1 << 9;
     public bool Piercing = false;
+
+    float m_LifeTimer;
+
+    void OnEnable()
+    {
+        m_LifeTimer = lifeTime;
+    }
+
     void Update()
     {
         gameObject.transform.Translate(transform.up * projectileSpeed);
@@ -32,8 +40,11 @@ public class BaseProjectile : MonoBehaviour
                 gameObject.SetActive(false);
             }
         }
-        lifeTime -= Time.deltaTime;
-        if (lifeTime <= 0) { Destroy(this.gameObject); }
+        m_LifeTimer -= Time.deltaTime;
+        if (m_LifeTimer <= 0)
+        {
+            gameObject.SetActive(false);
+        }
     }
 
 }

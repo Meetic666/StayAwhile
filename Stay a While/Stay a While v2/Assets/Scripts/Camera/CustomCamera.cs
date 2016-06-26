@@ -22,6 +22,9 @@ public class CustomCamera : MonoBehaviour
     {
         _camera = GetComponent<Camera>();
         StartCoroutine(update_cr());
+
+        EventManager.Instance.RegisterListener(typeof(ShootEventData), new GameEventDelegate(OnReceiveShootEvent));
+        EventManager.Instance.RegisterListener(typeof(DamageEventData), new GameEventDelegate(OnReceiveDamageEvent));
     }
 
     private IEnumerator update_cr()
@@ -126,5 +129,15 @@ public class CustomCamera : MonoBehaviour
             yield return null;
         }
         lerping = false;
+    }
+
+    void OnReceiveShootEvent(EventData data)
+    {
+        CameraShake();
+    }
+
+    void OnReceiveDamageEvent(EventData data)
+    {
+        CameraShake();
     }
 }
