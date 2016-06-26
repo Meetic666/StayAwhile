@@ -106,6 +106,8 @@ public class Spawner : MonoBehaviour
                     }
                 }
 
+                pos.z = SpriteLayerConstants.ENEMY_SPRITE_LAYER;
+
                 ObjectPool.Instance.Instantiate(prefab, pos, Quaternion.identity);
             }
             

@@ -23,6 +23,7 @@ public class Octopus : BaseEnemy
             pos.x = Random.Range(-0.05f, 0.05f);
             pos.y = Random.Range(-0.05f, 0.05f);
             pos += origin;
+            pos.z = transform.position.z;
             this.transform.position = pos;
             duration -= Time.deltaTime;
             yield return null;
@@ -82,11 +83,6 @@ public class Octopus : BaseEnemy
     protected override IEnumerator died_cr()
     {
         base.died_cr();
-        //Spawn fuel
-        Instantiate(Fuel, this.transform.position, Quaternion.identity);
-
-        GameObject fab = (GameObject)Instantiate(bloodPrefab, this.transform.position, this.transform.rotation);
-        fab.GetComponent<SpriteRenderer>().sprite = bloodSprites[Random.Range(0, bloodSprites.Length)];
 
         StopAllCoroutines();
         this.gameObject.SetActive(false);

@@ -82,6 +82,8 @@ public class Drop_Spawner : MonoBehaviour
                 pos.y = Random.Range(-range, range);
                 pos += this.transform.position;
 
+                pos.z = SpriteLayerConstants.PICK_UP_SPRITE_LAYER;
+
                 GameObject box = ObjectPool.Instance.Instantiate(prefab, pos, Quaternion.identity);
                 spawnType = (Type)Random.Range(0, 8);
                 switch (spawnType)

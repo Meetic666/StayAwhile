@@ -75,3 +75,10 @@ public abstract class Functions : MonoBehaviour
 
     }
 }
+
+public class SpriteLayerConstants
+{
+    public const int ENEMY_SPRITE_LAYER = -2;
+    public const int BLOOD_SPRITE_LAYER = 0;
+    public const int PICK_UP_SPRITE_LAYER = -1;
+}

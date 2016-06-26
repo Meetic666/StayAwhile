@@ -109,6 +109,18 @@ public class BaseEnemy : MonoBehaviour
                 currentState = State.Dead;
                 m_DeathEventData.m_Position = transform.position;
                 EventManager.Instance.SendEvent(m_DeathEventData);
+
+                Vector3 position = transform.position;
+                position.z = SpriteLayerConstants.PICK_UP_SPRITE_LAYER;
+
+                //Spawn fuel
+                Instantiate(Fuel, position, Quaternion.identity);
+
+                position.z = SpriteLayerConstants.BLOOD_SPRITE_LAYER;
+
+                GameObject fab = (GameObject)Instantiate(bloodPrefab, position, this.transform.rotation);
+                fab.GetComponent<SpriteRenderer>().sprite = bloodSprites[Random.Range(0, bloodSprites.Length)];
+
                 break;
 
             case State.Spawned: currentState = State.Spawned; break;
