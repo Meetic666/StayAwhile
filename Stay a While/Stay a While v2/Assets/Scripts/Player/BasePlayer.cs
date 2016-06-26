@@ -130,7 +130,7 @@ public class BasePlayer : MonoBehaviour
         Vector3 vec = new Vector3(horizontal, vertical);
         vec = gameObject.transform.position - (vec + gameObject.transform.position);
         vec.Normalize();
-        gameObject.transform.up = vec;
+        gameObject.transform.up = vec /2.0f;
     }
     protected virtual void OnDestroy()
     {
