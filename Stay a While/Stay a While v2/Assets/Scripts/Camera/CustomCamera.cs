@@ -11,7 +11,49 @@ public class CustomCamera : MonoBehaviour
     private Vector3 axis;
     private int playerIndex;
     private float movement;
+
+    private Camera _camera;
+    private Transform playerOne;
+    private Transform playerTwo;
+    [SerializeField]
+    private float lerpSpeed;
     
+    void Start()
+    {
+        _camera = GetComponent<Camera>();
+        StartCoroutine(update_cr());
+    }
+
+    private IEnumerator update_cr()
+    {
+        yield return null;
+
+        playerOne = ObjectSingleton.Instance.playerList[0].transform;
+        if (ObjectSingleton.Instance.playerList.Count > 1) { playerTwo = ObjectSingleton.Instance.playerList[1].transform; }
+
+        bool multiplayer = false;
+        if (playerTwo != null) { multiplayer = true; }
+        while(true)
+        {
+            if(!multiplayer)
+            {
+                Vector3 pos = Vector3.Lerp(this.transform.position, playerOne.position, lerpSpeed);
+                pos.z = -3;
+                this.transform.position = pos;
+            }
+            else
+            {
+                Vector3 pos = playerOne.position;
+                pos += (playerTwo.position - playerOne.position) / 2;
+                float multiplier = Vector3.Distance(playerOne.position, playerTwo.position) / 21;
+                pos.z = -3;
+                if (multiplier > 1) { _camera.orthographicSize = 9.42f * Mathf.Abs(multiplier); }
+                this.transform.position = pos;
+            }
+            yield return null;
+        }
+    }
+
     public void CameraShake(float force = 0.75f)
     {
         axis = Vector3.one;
