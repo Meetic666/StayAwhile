@@ -144,7 +144,6 @@ public class BaseEnemy : MonoBehaviour
 
     public virtual void DealDamage(float dmg)
     {
-        Debug.Log("DEAL DAMAGE");
         health -= dmg;
         if(health <= 0)
         {

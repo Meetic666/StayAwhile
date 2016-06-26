@@ -19,7 +19,7 @@ public class BaseProjectile : MonoBehaviour
 
     void Update()
     {
-        gameObject.transform.Translate(transform.up * projectileSpeed);
+        transform.Translate(transform.up * projectileSpeed);
 
         RaycastHit2D hit = Physics2D.CircleCast(gameObject.transform.position, Radius, transform.up, 0.1f, maskToHit);
         if (hit == true)
@@ -34,7 +34,7 @@ public class BaseProjectile : MonoBehaviour
                 hit.collider.GetComponent<BasePlayer>().Damage(DamageToDeal);
             }
 
-            if (Piercing == true)
+            if (!Piercing)
             {
                 gameObject.transform.position = new Vector3(float.MaxValue, float.MaxValue);
                 gameObject.SetActive(false);
