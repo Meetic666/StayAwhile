@@ -102,24 +102,6 @@ public class Octopus : BaseEnemy
         yield return null;
     }
 
-    private IEnumerator checkTarget_cr()
-    {
-        float players = ObjectSingleton.Instance.playerList.Count;
-        while (players > 1)
-        {
-            if (ObjectSingleton.Instance.playerList[1].activeSelf)
-            {
-                float dist = Vector3.Distance(ObjectSingleton.Instance.playerList[0].transform.position, this.transform.position);
-
-                if (Vector3.Distance(ObjectSingleton.Instance.playerList[1].transform.position, this.transform.position) < dist)
-                { target = ObjectSingleton.Instance.playerList[1].transform; }
-                else { target = ObjectSingleton.Instance.playerList[0].transform; }
-            }
-
-            yield return null;
-        }
-    }
-
     protected override void OnTriggerEnter2D(Collider2D other)
     {
         if (other.tag == "Obstacle")

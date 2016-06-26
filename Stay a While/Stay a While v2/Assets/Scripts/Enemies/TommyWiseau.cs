@@ -45,21 +45,4 @@ public class TommyWiseau : BaseEnemy
         ChangeState(State.Moving);
         yield return null;
     }
-
-    private IEnumerator checkTarget_cr()
-    {
-        while (true)
-        {
-            float dist = Vector3.Distance(ObjectSingleton.Instance.playerList[0].transform.position, this.transform.position);
-            if(ObjectSingleton.Instance.playerList.Count > 1)
-            {
-                if (Vector3.Distance(ObjectSingleton.Instance.playerList[1].transform.position, this.transform.position) < dist)
-                { target = ObjectSingleton.Instance.playerList[1].transform; }
-                else { target = ObjectSingleton.Instance.playerList[0].transform; }
-            }
-            
-            yield return null;
-        }
-
-    }
 }

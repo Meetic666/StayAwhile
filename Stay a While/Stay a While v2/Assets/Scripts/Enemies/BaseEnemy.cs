@@ -2,6 +2,11 @@
 using System.Collections;
 using System.Collections.Generic;
 
+public class EnemyDeathEventData : EventData
+{
+    public Vector3 m_Position;
+}
+
 public class BaseEnemy : MonoBehaviour
 {
     [SerializeField]
@@ -39,6 +44,7 @@ public class BaseEnemy : MonoBehaviour
     protected GameObject bloodPrefab;
 
     ShootEventData m_ShootEventData;
+    protected EnemyDeathEventData m_DeathEventData;
 
     void Awake()
     {
@@ -54,7 +60,9 @@ public class BaseEnemy : MonoBehaviour
         StartCoroutine(update_cr());
 
         m_ShootEventData = new ShootEventData();
-        m_ShootEventData.m_WeaponName = m_EnemyName; 
+        m_ShootEventData.m_WeaponName = m_EnemyName;
+
+        m_DeathEventData = new EnemyDeathEventData();
     }
 
     protected virtual IEnumerator update_cr()
@@ -96,7 +104,13 @@ public class BaseEnemy : MonoBehaviour
                 m_ShootEventData.m_ShotPosition = transform.position;
                 EventManager.Instance.SendEvent(m_ShootEventData);
                 break;
-            case State.Dead: currentState = State.Dead; break;
+
+            case State.Dead:
+                currentState = State.Dead;
+                m_DeathEventData.m_Position = transform.position;
+                EventManager.Instance.SendEvent(m_DeathEventData);
+                break;
+
             case State.Spawned: currentState = State.Spawned; break;
             default: currentState = State.None; break;
         }
@@ -165,5 +179,28 @@ public class BaseEnemy : MonoBehaviour
         {
             obstacles.Remove(other.gameObject);
         }
+    }
+
+    protected IEnumerator checkTarget_cr()
+    {
+        while (true)
+        {
+            float dist = Vector3.Distance(ObjectSingleton.Instance.playerList[0].transform.position, this.transform.position);
+            if (ObjectSingleton.Instance.playerList.Count > 1)
+            {
+                if (ObjectSingleton.Instance.playerList[1].activeSelf
+                    && Vector3.Distance(ObjectSingleton.Instance.playerList[1].transform.position, this.transform.position) < dist)
+                {
+                    target = ObjectSingleton.Instance.playerList[1].transform;
+                }
+                else if(ObjectSingleton.Instance.playerList[0].activeSelf)
+                {
+                    target = ObjectSingleton.Instance.playerList[0].transform;
+                }
+            }
+
+            yield return null;
+        }
+
     }
 }

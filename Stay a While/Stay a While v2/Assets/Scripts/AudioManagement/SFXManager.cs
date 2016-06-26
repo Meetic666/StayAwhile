@@ -13,11 +13,13 @@ public class SFXManager : MonoBehaviour
 {
     public WeaponSFX[] m_PlayerWeaponSFXArray;
     public WeaponSFX[] m_EnemyWeaponSFXArray;
+    public AudioClip m_DeathSFX;
 
 	// Use this for initialization
 	void Start ()
     {
         EventManager.Instance.RegisterListener(typeof(ShootEventData), new GameEventDelegate(OnReceiveShootEvent));
+        EventManager.Instance.RegisterListener(typeof(EnemyDeathEventData), new GameEventDelegate(OnReceiveEnemyDeathEvent));
 	}
 
     void OnReceiveShootEvent(EventData data)
@@ -48,5 +50,12 @@ public class SFXManager : MonoBehaviour
                 }
             }
         }
+    }
+
+    void OnReceiveEnemyDeathEvent(EventData data)
+    {
+        EnemyDeathEventData deathData = (EnemyDeathEventData)data;
+        
+        AudioSource.PlayClipAtPoint(m_DeathSFX, deathData.m_Position);
     }
 }
