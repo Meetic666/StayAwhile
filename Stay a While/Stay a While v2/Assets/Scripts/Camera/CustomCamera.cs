@@ -45,7 +45,7 @@ public class CustomCamera : MonoBehaviour
             {
                 Vector3 pos = Vector3.Lerp(this.transform.position, playerOne.position, lerpSpeed);
                 pos.z = -10.0f;
-                
+                origin = pos;
                 this.transform.position = pos;
             }
             else
@@ -104,12 +104,12 @@ public class CustomCamera : MonoBehaviour
             Vector3 offset = Vector3.zero;
             while (duration > 0.0f)
             {
-                origin = this.transform.position;
+               // origin = this.transform.position;
 
                 offset.x = Random.Range(-axis.x, axis.x);
                 offset.y = Random.Range(-axis.y, axis.y);
 
-                this.transform.position += offset;
+                this.transform.position = origin + offset;
 
                 duration -= Time.deltaTime;
                 yield return null;

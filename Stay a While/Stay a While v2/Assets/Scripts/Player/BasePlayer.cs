@@ -82,6 +82,7 @@ public class BasePlayer : MonoBehaviour
 
     protected virtual void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Escape)) { Application.Quit(); }
         switch (playerNum)
         {
             case 0:
@@ -226,8 +227,8 @@ public class BasePlayer : MonoBehaviour
     public void Destroy()
     {
         //call this func from an animation event at the end of your death anim
+        //ObjectSingleton.Instance.playerList.RemoveAt(playerNum);
         Destroy(healthBar);
         Destroy(gameObject);
-        ObjectSingleton.Instance.playerList.RemoveAt(playerNum -1);
     }
 }
