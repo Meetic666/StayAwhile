@@ -39,16 +39,6 @@ public class Nurse : BaseEnemy
         }
     }
 
-    protected override IEnumerator died_cr()
-    {
-        base.died_cr();
-
-        StopAllCoroutines();
-        this.gameObject.SetActive(false);
-
-        yield return null;
-    }
-
     protected override IEnumerator spawned_cr()
     {
         base.spawned_cr();

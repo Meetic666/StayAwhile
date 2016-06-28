@@ -22,16 +22,6 @@ public class TommyWiseau : BaseEnemy
         Instantiate(FootBall, SpawnPoint.position, Quaternion.Euler(0.0f,0.0f,transform.rotation.eulerAngles.z/2.0f));
     }
 
-    protected override IEnumerator died_cr()
-    {
-        base.died_cr();
-
-        StopAllCoroutines();
-        this.gameObject.SetActive(false);
-
-        yield return null;
-    }
-
     protected override IEnumerator spawned_cr()
     {
         base.spawned_cr();

@@ -112,10 +112,7 @@ public class BaseEnemy : MonoBehaviour
 
                 Vector3 position = transform.position;
                 position.z = SpriteLayerConstants.PICK_UP_SPRITE_LAYER;
-
-                //Spawn fuel
-                Instantiate(Fuel, position, Quaternion.identity);
-
+                
                 position.z = SpriteLayerConstants.BLOOD_SPRITE_LAYER;
 
                 GameObject fab = (GameObject)Instantiate(bloodPrefab, position, this.transform.rotation);
@@ -159,7 +156,13 @@ public class BaseEnemy : MonoBehaviour
 
     protected virtual IEnumerator died_cr()
     {
+        //Spawn fuel
+        Instantiate(Fuel, this.transform.position, Quaternion.identity);
+
+        StopAllCoroutines();
         ChangeState(State.None);
+
+        this.gameObject.SetActive(false);
         yield return null;
     }
 

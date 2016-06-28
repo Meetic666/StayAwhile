@@ -19,6 +19,9 @@ public class PlayerRespawnEventData : EventData
 
 public class BasePlayer : MonoBehaviour
 {
+    [SerializeField]
+    private GameObject healthBar;
+
     public float MaxHealth = 100;
     public bool takesDamage = true;
     public int playerNum = 0;
@@ -70,6 +73,11 @@ public class BasePlayer : MonoBehaviour
 
         m_RespawnEventData = new PlayerRespawnEventData();
         m_RespawnEventData.m_Player = this;
+
+        if (Input.GetJoystickNames().Length < 2)
+        {
+            if (playerNum > 0) { Destroy(); }
+        }
     }
 
     protected virtual void Update()
@@ -218,6 +226,8 @@ public class BasePlayer : MonoBehaviour
     public void Destroy()
     {
         //call this func from an animation event at the end of your death anim
+        Destroy(healthBar);
         Destroy(gameObject);
+        ObjectSingleton.Instance.playerList.RemoveAt(playerNum -1);
     }
 }
